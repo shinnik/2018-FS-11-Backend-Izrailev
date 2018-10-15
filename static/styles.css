@@ -1,0 +1,9 @@
+div.dif_block {
+	background: Aquamarine;
+  	text-align: center;
+  	margin: Auto;
+  	margin-top: 250px;
+  	width: 200px;
+  	padding: 40px;
+	border: 5px solid lightblue;
+}

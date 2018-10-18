@@ -1,0 +1,20 @@
+input {
+	border: 100px;
+	outline: none;
+	height: 100%;
+	width: 70%;
+	margin-left: 30px;
+	background-color: whitesmoke;
+}
+
+::placeholder {
+	font-size: 30px;
+	font-family: Sans-serif;
+	color: #666;
+
+}
+
+:host {
+	display: inline-block;
+	border: 1px solid rgba(25, 25, 25, 0.32);
+}

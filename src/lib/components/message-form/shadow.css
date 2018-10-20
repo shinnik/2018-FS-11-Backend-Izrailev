@@ -1,0 +1,66 @@
+form-input {
+	display: inline-flex;
+	align-items: center;
+	width: 70%;
+	background-color: whitesmoke;
+}
+
+span {
+	display: inline-flex;
+	height: 100%;
+	width: 100%;
+}
+
+div#firsticon {
+	display: inline-flex;
+	width: 15%;
+}
+
+div#secondicon {
+	display: inline-flex;
+	width: 15%;
+}
+
+form {
+	display: block;
+	background-color: white;
+	bottom: 0;
+	width: 100%;
+	height:  150px;
+}
+
+i {
+	display: flex;
+	position: relative;
+	width: 15%;
+}
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;  /* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}
+
+.result {
+	display: inline-block;
+	color: red;
+}

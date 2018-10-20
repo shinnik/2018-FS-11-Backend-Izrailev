@@ -1,21 +1,21 @@
 // import styles from './index.css';
 import shadowStyles from './shadow.css';
 
-const slotName = 'message-input';
+// const slotName = 'message-input';
 
 const template = `
 	<style>${shadowStyles.toString()}</style>
 	<form>
 		<div class="result"></div>
-		<form-input name="message_text" placeholder="Cообщение" slot="message-input">
-			<span slot="icon"></span>
-		</form-input>
-		<div id="firsticon" style="align-content: center;background-color: whitesmoke">
-		    <i id="1" class="material-icons" style="width:60px;height:60px;font-size:60px;left:45px;top:45px">send</i>
-		</div>
-		<div id="secondicon" style="align-content: center;background-color: whitesmoke">
-		    <i id="secondicon" class="material-icons" style="width:60px;height:60px;font-size:60px;left:35px;top:45px">attach_file</i>
-        </div>
+		<span style="display: inline-flex">
+		    <form-input name="message_text" placeholder="Cообщение" slot="message-input"></form-input>
+		    <div id="firsticon" style="align-content: center;background-color: whitesmoke">
+		        <i id="1" class="material-icons" style="width:60px;height:60px;font-size:60px;left:45px;top:45px">send</i>
+		    </div>
+		    <div id="secondicon" style="align-content: center;background-color: whitesmoke">
+		        <i id="secondicon" class="material-icons" style="width:60px;height:60px;font-size:60px;left:35px;top:45px">attach_file</i>
+            </div>
+        </span>
 	</form>
 `;
 
@@ -25,6 +25,10 @@ class MessageForm extends HTMLElement {
     const shadowRoot = this.attachShadow({ mode: 'open' });
     shadowRoot.innerHTML = template;
     this.style.width = '100%';
+    this.style.display = 'flex';
+    this.style.position = 'absolute';
+    this.style.width = '100%';
+    this.style.bottom = '0';
     this._initElements();
     this._addHandlers();
   }
@@ -32,7 +36,7 @@ class MessageForm extends HTMLElement {
   static get observedAttributes() {
     return [
       'action',
-      'method'
+      'method',
     ];
   }
 
@@ -43,8 +47,8 @@ class MessageForm extends HTMLElement {
   _initElements() {
     const form = this.shadowRoot.querySelector('form');
     const message = this.shadowRoot.querySelector('.result');
-    //const textarea = this.shadowRoot.querySelector('.textbox');
-    const text = this.shadowRoot.querySelector('form-input[name = message_text]')
+    // const textarea = this.shadowRoot.querySelector('.textbox');
+    const text = this.shadowRoot.querySelector('form-input[name = message_text]');
     this._elements = {
       form,
       message,

@@ -8,9 +8,9 @@ function createFooter() {
   textbox.innerHTML += temp;
 }
 
-//function addFontLink() {
+// function addFontLink() {
 //    var head = document.head;
 //    head.innerHTML += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">'
-//}
+// }
 createFooter();
-//addFontLink();
+// addFontLink();

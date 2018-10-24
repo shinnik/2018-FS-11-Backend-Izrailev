@@ -47,6 +47,9 @@ class FormInput extends HTMLElement {
     this._elements.input.addEventListener('input', this._onInput.bind(this));
   }
 
+
+
+
   _onInput() {
     this._elements.hiddenInput.value = this._elements.input.value;
   }

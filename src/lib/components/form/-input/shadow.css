@@ -2,13 +2,13 @@ input {
 	border: 10px;
 	outline: none;
 	height: 50%;
-	width: 70%;
+	width: 100%;
 	margin-left: 30px;
-	background-color: whitesmoke;
+	margin-right: 30px;
 }
 
 ::placeholder {
-	font-size: 30px;
+	font-size: 14px;
 	font-family: Sans-serif;
 	color: #666;
 

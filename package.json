@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/shinnik/frontend#readme",
   "dependencies": {
+    "express": "^4.16.4",
+    "express-fileupload": "^1.0.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^4.0.0-beta.2",
     "material-design-icons": "^3.0.1",

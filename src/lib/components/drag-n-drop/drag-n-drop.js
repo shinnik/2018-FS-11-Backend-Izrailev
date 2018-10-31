@@ -47,9 +47,13 @@ class DragAndDropZone extends HTMLElement {
             data = image['outerHTML'];
         }
         else {
-            data = '<li><strong>' + f.name + '</strong> (' + f.type  + ') - ' +
-            f.size + ' bytes, last modified: ' +
-            f.lastModified + '</li>';
+          let container = document.createElement('li');
+          var message = document.createElement('a');
+          message.href = URL.createObjectURL(f);
+          message.innerText = f.name;
+          console.log(message);
+          container.appendChild(message);
+          data = container.innerHTML;
         }
         const dropEvent = new CustomEvent('drop-file', {
             bubbles: true,

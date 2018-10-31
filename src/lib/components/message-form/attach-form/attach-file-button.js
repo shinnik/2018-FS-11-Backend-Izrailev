@@ -49,11 +49,14 @@ export default class AttachFileForm extends HTMLElement {
                 console.log(attachments);
             }
             else {
-                let message = '<li><strong>' + f.name + '</strong> (' + f.type  + ') - ' +
-                    f.size + ' bytes, last modified: ' +
-                    f.lastModified + '</li>';
-                attachment.setMessage(message);
-                attachments.push(attachment.innerHTML);
+                let container = document.createElement('li');
+                let message = document.createElement('a');
+                message.href = URL.createObjectURL(f);
+                message.innerText = f.name;
+                console.log(message);
+                container.appendChild(message);
+                attachment.setMessage(container);
+                attachments.push(container.innerHTML);
                 }
         }
         const attachmentEvent = new CustomEvent('new-attachment', {

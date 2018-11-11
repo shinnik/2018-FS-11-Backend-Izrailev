@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles.css';
 import FormInput from './form-input/form-input';
 import classes from './MessageForm.module.css';
+import GeoForm from '../geo-form/geo-form'
 
 
 export default class MessageForm extends Component {
@@ -26,7 +27,7 @@ export default class MessageForm extends Component {
                 {/*<MessageList messages={this.state.messages}></MessageList>*/}
                 {/*<DropZone></DropZone>*/}
                 <span className={classes.FormContainer}>
-                    {/*<GeoForm></GeoForm>*/}
+                    <GeoForm></GeoForm>
                     <FormInput placeholder="Cообщение"
                                onMessageCommit={this.handleMessage}></FormInput>
                     {/*<AttachForm></AttachForm>*/}

@@ -19,6 +19,7 @@ const Chats = () => (
 const Main = () => (
   <div>
     <h1>Home page</h1>
+    <p>Use left-upper icon to navigate</p>	
   </div>
 );
 
@@ -33,6 +34,7 @@ class App extends Component {
               <Route path='/list_chats/chat_id=4' component={ () => <MessageForm id="4" /> } />
               <Route path='/list_chats' exact component={Chats} />
               <Route path='/main' exact component={Main} />
+	      <Route path='/' exact component={Main} />
           </Layout>
       </Router>
     );

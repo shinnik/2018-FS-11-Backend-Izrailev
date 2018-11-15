@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import MessageForm from './lib/components/message-form/index.js'
+import MessageForm from './lib/containers/message-form/index.js'
 
 class App extends Component {
   render() {

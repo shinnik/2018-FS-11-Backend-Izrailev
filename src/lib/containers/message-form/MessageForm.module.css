@@ -7,6 +7,7 @@
 }
 
 .FormContainer {
+    background: ivory;
     position: absolute;
     display: inline-flex;
     width: inherit;

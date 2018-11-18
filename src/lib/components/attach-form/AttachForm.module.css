@@ -9,6 +9,11 @@
     display: none;
 }
 
+img {
+    max-width: 300px;
+    max-height: 300px;
+}
+
 .MaterialIcons {
     font-family: 'Material Icons';
     font-weight: normal;

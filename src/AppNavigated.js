@@ -19,7 +19,7 @@ const Chats = () => (
 const Main = () => (
   <div>
     <h1>Home page</h1>
-    <p>Use left-upper icon to navigate</p>	
+    <p>Use right-upper icon to navigate</p>
   </div>
 );
 

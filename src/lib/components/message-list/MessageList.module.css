@@ -13,8 +13,9 @@ ul {
     width: 100%;
 
 }
+
 li {
-    display: block;
+    display: inline-block;
     padding: 12px 12px 24px 12px;
     clear: both;
     border-radius: 10px 10px 0 10px;
@@ -26,5 +27,16 @@ li {
     word-wrap: break-word;
     word-break: break-all;
     max-width: 80%;
+    min-width: 30px;
     box-shadow: 1px 1px 1px lightslategray;
+}
+
+.time {
+    color: darkgray;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: smaller;
+    margin-right: 4px;
+    margin-bottom: 3px;
 }

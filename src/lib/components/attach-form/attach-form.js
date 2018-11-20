@@ -3,19 +3,28 @@ import classes from "../attach-form/AttachForm.module.css";
 
 const AttachForm = ({onSendFile}) => {
 
+    var ID = function () {
+        // Math.random should be unique because of its seeding algorithm.
+        // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+        // after the decimal.
+        return '_' + Math.random().toString(36).substr(2, 9);
+    };
+
+
     const handleFileChange = (e) => {
+        console.log('!');
         let filelist = e.target.files;
         let blobFileList = [];
         for (let i = 0; i < filelist.length; i++) {
-            console.log(typeof filelist, filelist[i]);
+            //console.log(typeof filelist, filelist[i]);
             let blobFile = URL.createObjectURL(filelist[i]);
-            console.log(blobFile);
+            //console.log(blobFile);
             blobFileList.push(blobFile);
         }
         //console.log(blobFileList);
         //console.log(blobFileList.map((el) => <a href={el}></a>));
-        onSendFile(blobFileList.map((el) => (filelist[blobFileList.indexOf(el)].type !== 'image/png') ? <div><a href={el}>{filelist[blobFileList.indexOf(el)].name}</a><br /> </div>: <div><img src={el}></img><br /></div>));
-
+        onSendFile(blobFileList.map((el, index) => (filelist[blobFileList.indexOf(el)].type !== 'image/png' && filelist[blobFileList.indexOf(el)].type !== 'image/jpeg') ? <div key={ID()}><a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a><br/> </div>: <div key={ID()}><img src={el}></img><br /></div>));
+        e.target.value = '';
     };
 
     return (

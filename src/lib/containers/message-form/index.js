@@ -14,18 +14,21 @@ export default class MessageForm extends Component {
         super(props);
         this.handleMessage = this.handleMessage.bind(this);
         this.handleSendButton = this.handleSendButton.bind(this);
-        this.state = { messages: [], isSendButtonClicked: false };
+        this.state = { messages: [] };
     }
 
     handleMessage = function (newMessage) {
         let refreshedMessages = [...this.state.messages];
         refreshedMessages.push(newMessage);
-        this.setState({messages: refreshedMessages, isSendButtonClicked: false});
+        this.setState({messages: refreshedMessages});
     };
 
     handleSendButton = function (e) {
-        let clicked = true;
-        this.setState({isSendButtonClicked: clicked});
+        let input = document.querySelector('input');
+        if (input.value !== '') {
+            this.handleMessage(input.value);
+            input.value = '';
+        }
     };
 
     render() {
@@ -37,8 +40,7 @@ export default class MessageForm extends Component {
                 <span className={classes.FormContainer}>
                     <GeoForm onSendGeo={this.handleMessage}></GeoForm>
                     <FormInput placeholder="Cообщение"
-                               onMessageCommit={this.handleMessage}
-                               isButtonTriggered={this.state.isSendButtonClicked}>
+                               onMessageCommit={this.handleMessage}>
                     </FormInput>
                     <SendButton onButtonClick={this.handleSendButton}></SendButton>
                     <AttachForm onSendFile={this.handleMessage}></AttachForm>

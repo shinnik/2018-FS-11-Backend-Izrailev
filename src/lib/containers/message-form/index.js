@@ -1,51 +1,59 @@
 import React, { Component } from 'react';
-import styles from './styles.css';
-import FormInput from './form-input/form-input';
-import classes from './MessageForm.module.css';
-import GeoForm from '../../components/geo-form/geo-form';
-import AttachForm from '../../components/attach-form/attach-form';
-import SendButton from '../../components/send-button/send-button';
+import { connect } from 'react-redux';
+import classes from "./MessageForm.module.css";
+import FormInput from "../../components/form-input/form-input";
+import GeoForm from "../../components/geo-form/geo-form";
 import MessageList from '../../components/message-list/message-list';
+import AttachForm from '../../components/attach-form/attach-form'
+import SendButton from '../../components/send-button/send-button'
+import * as actions from '../../../store/reducers/actions'
 
-
-export default class MessageForm extends Component {
-
-    constructor(props) {
-        super(props);
-        this.handleMessage = this.handleMessage.bind(this);
-        this.handleSendButton = this.handleSendButton.bind(this);
-        this.state = { messages: [] };
-    }
-
-    handleMessage = function (newMessage) {
-        let refreshedMessages = [...this.state.messages];
-        refreshedMessages.push(newMessage);
-        this.setState({messages: refreshedMessages});
-    };
-
-    handleSendButton = function (e) {
-        let input = document.querySelector('input');
-        if (input.value !== '') {
-            this.handleMessage(input.value);
-            input.value = '';
-        }
-    };
-
+class MessageForm extends Component {
     render() {
         return (
             //<style>${styles.toString()}</style>
             <div className={classes.FooterContainer}>
-                <MessageList messages={this.state.messages}></MessageList>
+                <MessageList messages={this.props.messages}></MessageList>
                 {/*<DropZone></DropZone>*/}
                 <span className={classes.FormContainer}>
-                    <GeoForm onSendGeo={this.handleMessage}></GeoForm>
+                    <GeoForm onSendGeo={this.props.onGeoMessage}></GeoForm>
                     <FormInput placeholder="Cообщение"
-                               onMessageCommit={this.handleMessage}>
+                               onMessageCommit={this.props.onHandleMessage}>
                     </FormInput>
-                    <SendButton onButtonClick={this.handleSendButton}></SendButton>
-                    <AttachForm onSendFile={this.handleMessage}></AttachForm>
+                    <SendButton onButtonClick={this.props.onSendButtonClick}></SendButton>
+                    <AttachForm onSendFile={this.props.onFileMessage}></AttachForm>
                 </span>
             </div>
-         );
+        );
     }
-}
+};
+
+const mapStateToProps = state => {
+    return {
+        messages: state.msg.messages
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onHandleMessage: (e) => {
+            e.preventDefault();
+            dispatch({type: actions.ADD_TEXT, event: e})
+        },
+        onGeoMessage: (e) => {
+            e.preventDefault();
+            dispatch({type: actions.ADD_LOCATION, event: e})
+        },
+        onFileMessage: (e) => {
+           e.preventDefault();
+           dispatch({type: actions.ADD_FILE, event: e})
+        },
+        onSendButtonClick: (e) => {
+            e.preventDefault();
+            let input = document.querySelector('input');
+            dispatch({type: actions.ADD_BY_CLICK, input: input})
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageForm);

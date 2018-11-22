@@ -1,0 +1,55 @@
+.MenuContainer {
+    display: flex;
+    background: ivory;
+    height: 50px;
+}
+
+.name {
+    font-size: 20px;
+    font-family: Sawasdee;
+    margin-left: calc(15% - 10px);
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    width: 15%;
+}
+
+.MaterialIcons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 40px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+
+.MaterialIconsForOnlineStatus {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 20px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+    margin-left: calc(15% - 5px);
+    margin-bottom: 2px;
+}

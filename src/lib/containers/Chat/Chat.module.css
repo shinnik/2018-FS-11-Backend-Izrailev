@@ -1,0 +1,13 @@
+.chat {
+    position: absolute;
+    display: flex;
+    height: 10%;
+    width: 100%;
+}
+
+.chatListContainer {
+}
+
+.linker {
+
+}

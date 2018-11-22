@@ -1,7 +1,7 @@
 import React from 'react';
 import Aux from '../../hoc/Aux/Aux'
 import classes from './Layout.module.css';
-import Header from './../Header/Header'
+import Header from './../../containers/Header/Header'
 
 const layout = ({children}) => (
   <Aux>

@@ -1,14 +1,10 @@
 import React from 'react';
 import classes from './SendButton.module.css'
 
-const SendButton = ({onButtonClick}) => {
-
-    const handleClick = (e) => {
-        onButtonClick(e);
-    };
+const SendButton = (props) => {
 
     return (
-        <label className={classes.SendButton} onClick={handleClick}>
+        <label className={classes.SendButton} onClick={props.onButtonClick}>
             <i className={classes.MaterialIcons}>send</i>
         </label>
     )

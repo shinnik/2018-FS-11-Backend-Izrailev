@@ -1,6 +1,3 @@
-import * as actions from './actions';
-import React from "react";
-
 const initialState = {
     isAuthorized: true,
     name: 'Nikita'

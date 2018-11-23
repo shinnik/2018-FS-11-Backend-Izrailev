@@ -1,3 +1,5 @@
+// import ReduxThunk from 'redux-thunk'
+
 export default function getPosition (options) {
     return new Promise((res, rej) => {
         if ('geolocation' in navigator) {

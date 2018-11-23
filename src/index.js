@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './AppNavigated';
-import * as serviceWorker from './serviceWorker';
 import messagesReducer from './store/reducers/message-form';
 import headerReducer from './store/reducers/header';
 

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Layout from './lib/components/Layout/Layout';
 import MessageForm from './lib/containers/message-form/index';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {Link} from 'react-router-dom';
 import Chats from './lib/containers/Chat/chat';
 
 

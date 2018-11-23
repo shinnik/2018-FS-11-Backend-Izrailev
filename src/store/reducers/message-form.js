@@ -9,10 +9,12 @@ const initialState = {
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.ADD_TEXT:
-            let text = action.event.target[0].value;
             let newMessages = [...state.messages];
-            newMessages.push(text);
-            action.event.target[0].value = '';
+            if (action.event.target[0].value !== '') {
+                let text = action.event.target[0].value;
+                newMessages.push(text);
+                action.event.target[0].value = '';
+            }
             return {
                 ...state,
                 messages: newMessages
@@ -28,19 +30,18 @@ const messagesReducer = (state = initialState, action) => {
                 latitude: null ,
                 longitude: null
             };
+
+            let messagesWithGeo = [...state.messages];
+
             getPosition(geoOptions).then(position => {
                 userPosition.latitude = position.coords.latitude.toFixed(5);
                 userPosition.longitude = position.coords.longitude.toFixed(5);
-                var geoMessage = 'Latitude: ' + userPosition.latitude + '\n' + 'Longitude: ' + userPosition.longitude;
-                let messagesWithGeo = [...state.messages];
+                let geoMessage = 'Latitude: ' + userPosition.latitude + '\nLongitude: ' + userPosition.longitude;
                 messagesWithGeo.push(geoMessage);
-                return {
-                    ...state,
-                    messages: messagesWithGeo
-                };
             });
             return {
-                ...state
+                ...state,
+                messages: messagesWithGeo
             };
         case actions.ADD_FILE:
             let filelist = action.event.target.files;
@@ -50,7 +51,7 @@ const messagesReducer = (state = initialState, action) => {
                 blobFileList.push(blobFile);
             }
             let messagesWithFiles = [...state.messages];
-            let arrayToConcat = blobFileList.map((el, index) => (filelist[blobFileList.indexOf(el)].type !== 'image/png' && filelist[blobFileList.indexOf(el)].type !== 'image/jpeg') ? <div key={el.id}><a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a><br/> </div>: <div key={el.id}><img src={el}></img><br /></div>);
+            let arrayToConcat = blobFileList.map((el, index) => (filelist[blobFileList.indexOf(el)].type !== 'image/png' && filelist[blobFileList.indexOf(el)].type !== 'image/jpeg') ? <div key={el.id}><a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a><br/> </div>: <div key={el.id}><img src={el} alt="nopic"></img><br /></div>);
             messagesWithFiles.push(arrayToConcat);
             action.event.target.value = '';
             return {
@@ -59,9 +60,11 @@ const messagesReducer = (state = initialState, action) => {
             };
         case actions.ADD_BY_CLICK:
             let newMessagesAfterClick = [...state.messages];
-            text = action.input.value;
-            newMessagesAfterClick.push(text);
-            action.input.value = '';
+            if (action.input.value !== '') {
+                let text = action.input.value;
+                newMessagesAfterClick.push(text);
+                action.input.value = '';
+            }
             return {
                 ...state,
                 messages: newMessagesAfterClick

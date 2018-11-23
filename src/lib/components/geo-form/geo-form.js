@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './GeoForm.module.css';
-import getPosition from '../utils/geolocation'
 
 const GeoForm = ({onSendGeo}) => {
 

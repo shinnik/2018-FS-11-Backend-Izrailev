@@ -17,6 +17,7 @@ class Header extends Component {
                     <ul className="dropdown-content">
                         <Link to='/main'>Home</Link>
                         <Link to='/list_chats'>Chats</Link>
+                        <Link to='/login'>Login</Link>
                     </ul>
                 </div>
             </div>

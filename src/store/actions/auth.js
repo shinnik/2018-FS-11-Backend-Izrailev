@@ -1,23 +1,4 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
-
-axios.interceptors.response.use((response) => {
-    return response;
-}, (error) => {
-    if (JSON.parse(error.config.data).password.length < 6) {
-       return error
-    } else {
-        return Promise.resolve({
-            data: {
-                token: 123,
-            },
-            status: 200,
-            statusText: 'OK',
-            headers: {},
-            config: error.config
-        });
-    }
-});
 
 export const authStart = () => {
     return {
@@ -42,11 +23,20 @@ export const authFailed = (error) => {
 export const auth = (email, password) => {
     return dispatch => {
         dispatch(authStart());
-        axios.post('login', {email, password})
-            .then(res => {
-                localStorage.setItem('token', res.data.token);
-                dispatch(authSuccess(res.data.token));
-            }).catch(err => {
+        fetch('http://127.0.0.1:5050/check_auth',{
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json",
+                "Origin": "http://127.0.0.1:3000"
+            },
+            body: JSON.stringify({email: email, password: password}),
+            mode: "cors"
+        }).then(res => res.json())
+            .then(data => {
+            console.log(data);
+            localStorage.setItem('access_token', data.token);
+            dispatch(authSuccess(data.token));
+        }).catch(err => {
                 console.log(err);
                 dispatch(authFailed(err))
             });
@@ -55,7 +45,7 @@ export const auth = (email, password) => {
 
 export const authCheckState = () => {
     return dispatch => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('access_token');
         if(token) {
             dispatch(authSuccess(token));
         }

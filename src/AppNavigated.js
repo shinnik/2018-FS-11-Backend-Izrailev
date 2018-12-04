@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import Layout from './lib/components/Layout/Layout';
 import MessageForm from './lib/containers/message-form/index';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import Chats from './lib/containers/Chat/chat';
+import Auth from './lib/containers/Auth/Auth';
+import {connect} from "react-redux";
+import * as actions from './store/actions';
+
 
 
 const Main = () => (
@@ -13,34 +17,57 @@ const Main = () => (
 );
 
 class App extends Component {
-  render() {
-    return (
-      <Router>
-          <Layout>
-              <Route path='/list_chats/chat_id=1' component={ () => <MessageForm id="1" /> } />
-              <Route path='/list_chats/chat_id=2' component={ () => <MessageForm id="2" /> } />
-              <Route path='/list_chats/chat_id=3' component={ () => <MessageForm id="3" /> } />
-              <Route path='/list_chats/chat_id=4' component={ () => <MessageForm id="4" /> } />
-              <Route path='/list_chats' exact component={ () => <Chats />} />
-              <Route path='/main' exact component={Main} />
-	      <Route path='/' exact component={Main} />
-          </Layout>
-      </Router>
-    );
-  }
+    componentDidMount() {
+        this.props.onTryAutoLogin();
+    }
+
+    render() {
+        let routes = (
+            <Layout>
+                <Switch>
+                    <Route path='/main' exact component={Main}/>
+                    <Route path='/login' exact component={Auth}/>
+                    <Redirect to='/main'/>
+                </Switch>
+            </Layout>
+        );
+
+        if (this.props.isAuthed) {
+            routes = (
+                <Layout>
+                    <Switch>
+                        <Route path='/list_chats/chat_id=1' component={() => <MessageForm id="1"/>}/>
+                        <Route path='/list_chats/chat_id=2' component={() => <MessageForm id="2"/>}/>
+                        <Route path='/list_chats' exact component={() => <Chats/>}/>
+                        <Route path='/main' exact component={Main}/>
+                        <Route path='/login' exact component={Auth}/>
+                        <Redirect to='/main'/>
+                    </Switch>
+                </Layout>
+            )
+        }
+        return (
+        <Router>
+            {routes}
+        </Router>
+        );
+
+    }
 }
 
 
-//class App extends Component {
- // render() {
- //   return (
-  //      <div>
-  //        <div class="head"></div>
-  //        <MessageForm></MessageForm>
-  //      </div>
-  //  );
- // }
-//}
 
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        isAuthed: state.auth.token !== null,
+    }
+};
+
+const initMapDispatchToProps = dispatch => {
+    return {
+        onTryAutoLogin: () => dispatch(actions.authCheckState()),
+    }
+};
+
+export default connect(mapStateToProps, initMapDispatchToProps)(App);

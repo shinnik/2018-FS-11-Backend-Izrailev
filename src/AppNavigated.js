@@ -6,6 +6,7 @@ import Chats from './lib/containers/Chat/chat';
 import Auth from './lib/containers/Auth/Auth';
 import {connect} from "react-redux";
 import * as actions from './store/actions';
+import Centrifuge from './lib/containers/Centrifuge/Centrifuge';
 
 
 
@@ -47,9 +48,13 @@ class App extends Component {
             )
         }
         return (
-        <Router>
-            {routes}
-        </Router>
+	<div>
+		<Router>
+            	{routes}
+        	</Router>
+		<Centrifuge/>
+	</div>
+        
         );
 
     }

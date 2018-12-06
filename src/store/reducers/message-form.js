@@ -69,6 +69,14 @@ const messagesReducer = (state = initialState, action) => {
                 ...state,
                 messages: newMessagesAfterClick
             };
+        case actions.MESSAGE_RECEIVED:
+            let messagesWithFromCompanionOne = [...state.messages];
+            messagesWithFromCompanionOne.push(action.payload.data.text);
+            console.log(messagesWithFromCompanionOne);
+            return {
+                ...state,
+                messages: messagesWithFromCompanionOne
+            };
         default:
             return {
                 ...state

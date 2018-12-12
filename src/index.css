@@ -27,7 +27,7 @@ body {
 .dropdown:hover .dropdown-content{
     display: flex;
     align-items: center;
-    position: absolute;
+    position: fixed;
     z-index: 5;
 }
 

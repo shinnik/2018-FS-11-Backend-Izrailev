@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import Input from '../../components/Input/Input';
 import * as actions from '../../../store/actions';
+import * as actionTypes from '../../../store/actions/actionTypes';
+
+
 import { connect } from 'react-redux';
+
 
 class Auth extends Component {
     state={
@@ -34,7 +38,7 @@ class Auth extends Component {
                 valid: false,
                 touched: false,
             },
-        }
+        },
     };
 
     checkValidity(value, rules) {
@@ -73,6 +77,11 @@ class Auth extends Component {
         );
     };
 
+    // logout = (e) => {
+    //     e.preventDefault();
+    //     window.localStorage.removeItem('access_token');
+    // };
+
     render() {
         const formElements = {...this.state.controls};
         const inputs = Object.keys(formElements).map(key => {
@@ -93,6 +102,9 @@ class Auth extends Component {
                 <button type="submit">
                     Войти
                 </button>
+                <button onClick={this.props.onLogout}>
+                    Выйти
+                </button>
             </form>
         );
     }
@@ -100,7 +112,8 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch =>{
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (email, password) => dispatch(actions.auth(email, password)),
+        onLogout: () => dispatch({type: actionTypes.LOGOUT})
     }
 };
 
@@ -108,6 +121,7 @@ const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
         error: state.auth.error,
+        token: state.auth.token
     }
 };
 

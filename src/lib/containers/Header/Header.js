@@ -7,6 +7,23 @@ import UserInfo from '../../components/user-info/user-info';
 
 class Header extends Component {
     render () {
+
+        let dropdownMenu;
+
+        if (this.props.isAuth) {
+            dropdownMenu = (<ul className="dropdown-content">
+                <Link to='/main'>Home</Link>
+                <Link to='/list_chats'>Chats</Link>
+                <Link to='/login'>Login</Link>
+            </ul>);
+        }
+        else {
+            dropdownMenu = (<ul className="dropdown-content">
+                <Link to='/main'>Home</Link>
+                <Link to='/login'>Login</Link>
+            </ul>);
+        }
+
         return (
             <div className={classes.MenuContainer}>
                 <UserInfo isAuthorized={this.props.isAuth} name={this.props.name}/>
@@ -14,11 +31,7 @@ class Header extends Component {
                     <label className="menu-label">
                         <i className={classes.MaterialIcons}>view_headline</i>
                     </label>
-                    <ul className="dropdown-content">
-                        <Link to='/main'>Home</Link>
-                        <Link to='/list_chats'>Chats</Link>
-                        <Link to='/login'>Login</Link>
-                    </ul>
+                    {dropdownMenu}
                 </div>
             </div>
         )
@@ -28,7 +41,7 @@ class Header extends Component {
 const mapStateToProps = state => {
     return {
         name: state.hdr.name,
-        isAuth: state.hdr.isAuthorized
+        isAuth: state.auth.token
     }
 };
 

@@ -17,7 +17,7 @@ ul {
     list-style-type: none;
 }
 
-.message {
+.yes {
     display: inline-block;
     padding: 12px 12px 24px 12px;
     clear: both;
@@ -26,6 +26,24 @@ ul {
     background: #F3E5F5;
     color: black;
     position: relative;
+    margin: 4px 10px;
+    word-wrap: break-word;
+    word-break: break-all;
+    max-width: 80%;
+    min-width: 30px;
+    box-shadow: 1px 1px 1px lightslategray;
+}
+
+.no {
+    display: inline-block;
+    padding: 12px 12px 24px 12px;
+    clear: both;
+    border-radius: 10px 10px 0 10px;
+    float: left;
+    background: greenyellow;
+    color: black;
+    position: relative;
+    right: 87%;
     margin: 4px 10px;
     word-wrap: break-word;
     word-break: break-all;

@@ -12,7 +12,11 @@ const messagesReducer = (state = initialState, action) => {
             let newMessages = [...state.messages];
             if (action.event.target[0].value !== '') {
                 let text = action.event.target[0].value;
-                newMessages.push(text);
+                let message = {
+                    value: text,
+                    my: "yes"
+                };
+                newMessages.push(message);
                 action.event.target[0].value = '';
             }
             return {
@@ -37,7 +41,11 @@ const messagesReducer = (state = initialState, action) => {
                 userPosition.latitude = position.coords.latitude.toFixed(5);
                 userPosition.longitude = position.coords.longitude.toFixed(5);
                 let geoMessage = 'Latitude: ' + userPosition.latitude + '\nLongitude: ' + userPosition.longitude;
-                messagesWithGeo.push(geoMessage);
+                let message = {
+                    value: geoMessage,
+                    my: "yes"
+                };
+                messagesWithGeo.push(message);
             });
             return {
                 ...state,
@@ -52,7 +60,11 @@ const messagesReducer = (state = initialState, action) => {
             }
             let messagesWithFiles = [...state.messages];
             let arrayToConcat = blobFileList.map((el, index) => (filelist[blobFileList.indexOf(el)].type !== 'image/png' && filelist[blobFileList.indexOf(el)].type !== 'image/jpeg') ? <div key={el.id}><a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a><br/> </div>: <div key={el.id}><img src={el} alt="nopic"></img><br /></div>);
-            messagesWithFiles.push(arrayToConcat);
+            let message = {
+                value: arrayToConcat,
+                my: "yes"
+            };
+            messagesWithFiles.push(message);
             action.event.target.value = '';
             return {
                 ...state,
@@ -62,7 +74,11 @@ const messagesReducer = (state = initialState, action) => {
             let newMessagesAfterClick = [...state.messages];
             if (action.input.value !== '') {
                 let text = action.input.value;
-                newMessagesAfterClick.push(text);
+                let message = {
+                    value: text,
+                    my: "yes"
+                };
+                newMessagesAfterClick.push(message);
                 action.input.value = '';
             }
             return {
@@ -71,7 +87,11 @@ const messagesReducer = (state = initialState, action) => {
             };
         case actions.MESSAGE_RECEIVED:
             let messagesWithFromCompanionOne = [...state.messages];
-            messagesWithFromCompanionOne.push(action.payload.data.text);
+            message = {
+                value: action.payload.data.text,
+                my: "no"
+            };
+            messagesWithFromCompanionOne.push(message);
             console.log(messagesWithFromCompanionOne);
             return {
                 ...state,

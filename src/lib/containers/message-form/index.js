@@ -7,6 +7,7 @@ import MessageList from '../../components/message-list/message-list';
 import AttachForm from '../../components/attach-form/attach-form'
 import SendButton from '../../components/send-button/send-button'
 import * as actions from '../../../store/reducers/actions'
+import Keyboard from "../Keyboard/EmojiKeyboard";
 
 class MessageForm extends Component {
     render() {
@@ -20,6 +21,8 @@ class MessageForm extends Component {
                     <FormInput placeholder="Cообщение"
                                onMessageCommit={this.props.onHandleMessage}>
                     </FormInput>
+                    {/*<div className={classes.KeyboardContainer}><Keyboard/></div>*/}
+                    <Keyboard onEmojiClick={this.props.onEmojiClick}/>
                     <SendButton onButtonClick={this.props.onSendButtonClick}></SendButton>
                     <AttachForm onSendFile={this.props.onFileMessage}></AttachForm>
                 </span>
@@ -33,12 +36,13 @@ const mapStateToProps = state => {
         messages: state.msg.messages
     };
 };
-
 const mapDispatchToProps = dispatch => {
     return {
         onHandleMessage: (e) => {
-            e.preventDefault();
-            dispatch({type: actions.ADD_TEXT, event: e})
+            if (e.which === 13) {
+                e.preventDefault();
+                dispatch({type: actions.ADD_TEXT, event: e})
+            }
         },
         onGeoMessage: (e) => {
             e.preventDefault();
@@ -50,8 +54,13 @@ const mapDispatchToProps = dispatch => {
         },
         onSendButtonClick: (e) => {
             e.preventDefault();
-            let input = document.querySelector('input');
+            let input = document.querySelector('div#input');
+            console.log(input);
             dispatch({type: actions.ADD_BY_CLICK, input: input})
+        },
+        onEmojiClick: (e) => {
+            e.preventDefault();
+            dispatch({type: actions.ADD_EMOJI, event: e})
         }
     }
 };

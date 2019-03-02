@@ -65,3 +65,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+/*emojis ids*/
+#smiling_face {
+    background: url("./lib/containers/Keyboard/png/labeled/32/people/smiling-face.png?sprite");
+    background-size: 24px 24px;
+}
+
+#raised_hand {
+    background: url("./lib/containers/Keyboard/png/labeled/32/people/victory-hand.png?sprite");
+    background-size: 24px 24px;
+}
+
+#frowning_face {
+    background: url("./lib/containers/Keyboard/png/labeled/32/people/frowning-face.png?sprite");
+    background-size: 24px 24px;
+}
+
+#raised_fist {
+    background: url("./lib/containers/Keyboard/png/labeled/32/people/raised-fist.png?sprite");
+    background-size: 24px 24px;
+}
+
+#writing_hand {
+    background: url("./lib/containers/Keyboard/png/labeled/32/people/writing-hand.png?sprite");
+    background-size: 24px 24px;
+}
+
+#victory_hand {
+    background: url("./lib/containers/Keyboard/png/labeled/32/people/victory-hand.png?sprite");
+    background-size: 24px 24px;
+}
+
+#pointing_up {
+    background: url("./lib/containers/Keyboard/png/labeled/32/people/index-pointing-up.png?sprite");
+    background-size: 24px 24px;
+}

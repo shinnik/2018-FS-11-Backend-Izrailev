@@ -10,14 +10,15 @@ const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.ADD_TEXT:
             let newMessages = [...state.messages];
-            if (action.event.target[0].value !== '') {
-                let text = action.event.target[0].value;
+            if (action.event.target.innerHTML !== '') {
+                let content = action.event.target.innerHTML;
+                console.log(content, typeof content);
                 let message = {
-                    value: text,
+                    value: content,
                     my: "yes"
                 };
                 newMessages.push(message);
-                action.event.target[0].value = '';
+                action.event.target.innerHTML = '';
             }
             return {
                 ...state,
@@ -72,19 +73,25 @@ const messagesReducer = (state = initialState, action) => {
             };
         case actions.ADD_BY_CLICK:
             let newMessagesAfterClick = [...state.messages];
-            if (action.input.value !== '') {
-                let text = action.input.value;
+            if (action.input.innerHTML !== '') {
+                let content = action.input.innerHTML;
                 let message = {
-                    value: text,
+                    value: content,
                     my: "yes"
                 };
                 newMessagesAfterClick.push(message);
-                action.input.value = '';
+                action.input.innerHTML = '';
             }
             return {
                 ...state,
                 messages: newMessagesAfterClick
             };
+        case actions.ADD_EMOJI:
+            let iconElementId = action.event.target.id;
+            let el = "<span" +  " class=Keyboard_emoji__3YzE4" + ` id=${iconElementId}` + "></span>&#8203;";
+            document.execCommand('insertHTML', false, el);
+            document.querySelector('div#input');
+            return state;
         case actions.MESSAGE_RECEIVED:
             let messagesWithFromCompanionOne = [...state.messages];
             message = {

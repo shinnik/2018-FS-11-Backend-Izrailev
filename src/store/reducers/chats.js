@@ -8,6 +8,7 @@ const initialState = {
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.LOAD_CHATS:
+            // console.log(action.payload);
             return {
                 ...state,
                 name: action.payload

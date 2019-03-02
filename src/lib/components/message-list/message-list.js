@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './MessageList.module.css';
 
-const MessageList = (props) => {
+class MessageList extends Component {
 
-    let date = new Date();
-    let time = date.getHours() + ':' + date.getMinutes();
-    // const elClasses = [classes.message];
-    // if() {
-    //     elClasses.push(classes.myMessage)
-    // }
-    let preparedMessages = props.messages.map((el, index) => <li className={el.my === "yes" ? classes.yes : classes.no} key={index}>{el.value}<div className={classes.time}>{time}</div></li>).reverse();
-    return (
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let date = new Date();
+        let time = date.getHours() + ':' + date.getMinutes();
+        let preparedMessages = this.props.messages.map((el, index) => {
+            let innHTML = [el.value, `<div class=${classes.time}>${time}</div>`].join(' ');
+            let comp = <li dangerouslySetInnerHTML={{__html: innHTML}} className={el.my === "yes" ? classes.yes : classes.no}
+                key={index}></li>
+            return comp
+        }).reverse();
+
+        return (
             <div>
                 <ul className={classes.result}>{preparedMessages}</ul>
             </div>
         )
+    }
+
+
     };
 
 export default MessageList;

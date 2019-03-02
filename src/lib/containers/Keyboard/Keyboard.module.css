@@ -1,0 +1,52 @@
+.emoji{
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.EmojiButton {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    width: 10%;
+}
+
+.EmojiButton:hover .KeyboardContainer {
+    display: flex;
+    height: 36px;
+    width: 300px;
+    z-index: 5;
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+}
+
+.KeyboardContainer {
+    display: none;
+    height: 36px;
+    width: 200px;
+}
+
+
+.MaterialIcons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+
+    position: relative;
+    left: calc(50% - 12px);
+}

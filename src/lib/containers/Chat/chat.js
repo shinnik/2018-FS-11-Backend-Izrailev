@@ -5,13 +5,16 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/reducers/actions'
 
 class Chats extends Component {
-    state = {
-        chats: null
-    };
+
+    constructor(props) {
+        super(props);
+        this.onLoad();
+        console.log(this.props.chatName);
+    }
 
       onLoad = () => {
         let params = {
-            user_id: 10
+            user_id: 4
         };
         fetch('http://127.0.0.1:5050',{
             method: 'POST',
@@ -25,11 +28,12 @@ class Chats extends Component {
     };
 
     render () {
+        console.log('asd');
         return (
             <div className={classes.chatListContainer}>
                 <h1>Chats</h1>
                 <ul className="chat-list">
-                    <li onClick={this.onLoad} className="linker"><Link to='/list_chats/chat_id=1'>{this.props.chatName + ' /- ' + this.props.unread.toString() + ' new messages.'}</Link></li>
+                    <li className="linker"><Link to='/list_chats/chat_id=1'>{this.props.chatName + ' /- ' + this.props.unread.toString() + ' new messages.'}</Link></li>
                     {/*<li className="linker"><Link to='/list_chats/chat_id=2'>{this.props.chatName + ' /- ' + this.props.unread.toString() + ' new messages.'}</Link></li>*/}
                 </ul>
             </div>

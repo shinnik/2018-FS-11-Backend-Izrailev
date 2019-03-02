@@ -54,7 +54,7 @@ const mapDispatchToProps = dispatch => {
         },
         onSendButtonClick: (e) => {
             e.preventDefault();
-            let input = document.querySelector('div#input');
+            let input = document.querySelector('span#input');
             console.log(input);
             dispatch({type: actions.ADD_BY_CLICK, input: input})
         },

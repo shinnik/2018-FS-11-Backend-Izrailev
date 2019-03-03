@@ -58,6 +58,9 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
             options: cssOptions,
         },
         {
+            loader: require.resolve('css-sprite-loader')
+        },
+        {
             // Options for PostCSS as we reference these options twice
             // Adds vendor prefixing based on your specified browser support in
             // package.json

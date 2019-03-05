@@ -87,10 +87,10 @@ const messagesReducer = (state = initialState, action) => {
                 messages: newMessagesAfterClick
             };
         case actions.ADD_EMOJI:
+            document.querySelector('span#input').focus();
             let iconElementId = action.event.target.id;
             let el = "<span" +  " class=Keyboard_emoji__3YzE4" + ` id=${iconElementId}` + "></span>&#8203;";
             document.execCommand('insertHTML', false, el);
-            document.querySelector('div#input');
             return state;
         case actions.MESSAGE_RECEIVED:
             let messagesWithFromCompanionOne = [...state.messages];

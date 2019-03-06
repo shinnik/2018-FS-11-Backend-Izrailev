@@ -89,7 +89,9 @@ const messagesReducer = (state = initialState, action) => {
         case actions.ADD_EMOJI:
             document.querySelector('span#input').focus();
             let iconElementId = action.event.target.id;
-            let el = "<span" +  " class=Keyboard_emoji__3YzE4" + ` id=${iconElementId}` + "></span>&#8203;";
+            console.log(iconElementId);
+            let el = "<span" +  " title=emoji" + ` id=${iconElementId}` + "></span>&#8203;";
+            console.log(el);
             document.execCommand('insertHTML', false, el);
             return state;
         case actions.MESSAGE_RECEIVED:

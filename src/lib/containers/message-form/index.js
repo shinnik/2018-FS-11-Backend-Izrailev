@@ -60,6 +60,7 @@ const mapDispatchToProps = dispatch => {
         },
         onEmojiClick: (e) => {
             e.preventDefault();
+            console.log('here');
             dispatch({type: actions.ADD_EMOJI, event: e})
         }
     }

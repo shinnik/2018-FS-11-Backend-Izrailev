@@ -65,7 +65,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+span[title=emoji]{
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
 /*emojis ids*/
+
 #smiling_face {
     background: url("./lib/containers/Keyboard/png/labeled/32/people/smiling-face.png?sprite");
     background-size: 24px 24px;

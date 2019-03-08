@@ -91,8 +91,8 @@ const messagesReducer = (state = initialState, action) => {
         case actions.ADD_EMOJI:
             let cnt = state.emojiCounter + 1;
             let input = document.querySelector('span#input');
-            input.focus();
             if (input !== document.activeElement) {
+                input.focus();
                 setEndOfContenteditable(input);
             }
             let iconElementId = action.event.target.getAttribute('class');
@@ -106,9 +106,6 @@ const messagesReducer = (state = initialState, action) => {
             // console.log(input.selectionStart);
             let el = "<span contenteditable=false" +  " title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"; //&#8203;
             console.log(el);
-            if (input.childNodes.length) {
-                // placeCaretAfterNode(input.childNodes[input.childNodes.length - 1], input);
-            }
             document.execCommand('insertHTML', false, el);
             return {
                 ...state,

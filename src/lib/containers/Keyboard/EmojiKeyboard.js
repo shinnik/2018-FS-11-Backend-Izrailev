@@ -47,7 +47,7 @@ export default class Keyboard extends Component {
     render() {
         // const emojiList = EMOJIS.map((emoji, i) => <span key={i} style={{background: url(`${URL}/${emoji.name}.png?sprite`)}}/>);
         // const emojiList = EMOJIS.map((emoji, i) => <span key={i} className={classes.emoji} onClick={(emoji) => this.handleEmoji(emoji)} id={emoji.name}/>)
-        const emojiList = EMOJIS.map((emoji, i) => <span title="emoji" key={i} id={emoji.name} onMouseDown={event => event.preventDefault()} onClick={this.props.onEmojiClick}></span>)
+        const emojiList = EMOJIS.map((emoji, i) => <span title="emoji" key={i} className={emoji.name} onMouseDown={event => event.preventDefault()} onClick={this.props.onEmojiClick}></span>)
         console.log(emojiList);
         return (
             <label className={classes.EmojiButton}>

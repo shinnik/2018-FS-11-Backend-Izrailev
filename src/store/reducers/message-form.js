@@ -1,9 +1,11 @@
 import * as actions from './actions';
 import getPosition from '../../../src/lib/components/utils/geolocation';
 import React from "react";
+import { setEndOfContenteditable, placeCaretAfterNode } from '../../lib/components/utils/CaretControl';
 
 const initialState = {
-  messages: []
+  messages: [],
+  emojiCounter: 0
 };
 
 const messagesReducer = (state = initialState, action) => {
@@ -87,13 +89,31 @@ const messagesReducer = (state = initialState, action) => {
                 messages: newMessagesAfterClick
             };
         case actions.ADD_EMOJI:
-            document.querySelector('span#input').focus();
-            let iconElementId = action.event.target.id;
+            let cnt = state.emojiCounter + 1;
+            let input = document.querySelector('span#input');
+            input.focus();
+            if (input !== document.activeElement) {
+                setEndOfContenteditable(input);
+            }
+            let iconElementId = action.event.target.getAttribute('class');
             console.log(iconElementId);
-            let el = "<span" +  " title=emoji" + ` id=${iconElementId}` + "></span>&#8203;";
+            // let rng = document.createRange();
+            // let sel = document.getSelection();
+            // rng.selectNodeContents(input);
+            // rng.collapse();
+            // sel.addRange(rng);
+            // // sel.addRange(rng);
+            // console.log(input.selectionStart);
+            let el = "<span contenteditable=false" +  " title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"; //&#8203;
             console.log(el);
+            if (input.childNodes.length) {
+                // placeCaretAfterNode(input.childNodes[input.childNodes.length - 1], input);
+            }
             document.execCommand('insertHTML', false, el);
-            return state;
+            return {
+                ...state,
+                emojiCounter: cnt
+            };
         case actions.MESSAGE_RECEIVED:
             let messagesWithFromCompanionOne = [...state.messages];
             message = {

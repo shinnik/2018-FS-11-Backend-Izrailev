@@ -66,47 +66,55 @@ code {
     monospace;
 }
 
+font {
+    color: rgb(0 0 0);
+}
+
 span[title=emoji]{
     width: 24px;
     height: 24px;
     display: inline-flex;
     margin-left: 2px;
     margin-right: 2px;
+    color: transparent;
+    text-shadow: 0 0 0 gray;
 }
+
+
 
 /*emojis ids*/
 
-#smiling_face {
+.smiling_face {
     background: url("./lib/containers/Keyboard/png/labeled/32/people/smiling-face.png?sprite");
     background-size: 24px 24px;
 }
 
-#raised_hand {
+.raised_hand {
     background: url("./lib/containers/Keyboard/png/labeled/32/people/victory-hand.png?sprite");
     background-size: 24px 24px;
 }
 
-#frowning_face {
+.frowning_face {
     background: url("./lib/containers/Keyboard/png/labeled/32/people/frowning-face.png?sprite");
     background-size: 24px 24px;
 }
 
-#raised_fist {
+.raised_fist {
     background: url("./lib/containers/Keyboard/png/labeled/32/people/raised-fist.png?sprite");
     background-size: 24px 24px;
 }
 
-#writing_hand {
+.writing_hand {
     background: url("./lib/containers/Keyboard/png/labeled/32/people/writing-hand.png?sprite");
     background-size: 24px 24px;
 }
 
-#victory_hand {
+.victory_hand {
     background: url("./lib/containers/Keyboard/png/labeled/32/people/victory-hand.png?sprite");
     background-size: 24px 24px;
 }
 
-#pointing_up {
+.pointing_up {
     background: url("./lib/containers/Keyboard/png/labeled/32/people/index-pointing-up.png?sprite");
     background-size: 24px 24px;
 }

@@ -4,5 +4,5 @@ export const ADD_TEXT = 'ADD_TEXT';
 export const ADD_BY_CLICK = 'ADD_BY_CLICK';
 export const LOAD_CHATS = 'LOAD_CHATS';
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
-
+export const ADD_EMOJI = 'ADD_EMOJI';
 

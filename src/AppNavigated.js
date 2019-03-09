@@ -50,11 +50,11 @@ class App extends Component {
         return (
 	<div>
 		<Router>
-            	{routes}
-        	</Router>
+            {routes}
+        </Router>
 		<Centrifuge/>
 	</div>
-        
+
         );
 
     }

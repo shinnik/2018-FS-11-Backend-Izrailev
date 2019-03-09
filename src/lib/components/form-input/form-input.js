@@ -3,8 +3,8 @@ import React from "react";
 
 const FormInput = (props) => {
     return (
-        <form className={classes.form} onSubmit={props.onMessageCommit}>
-            <input className={classes.input} type="text" placeholder={props.placeholder} />
+        <form className={classes.form}>
+            <span id="input" className={classes.input} placeholder={props.placeholder} onKeyPress={props.onMessageCommit} contentEditable={true} />
         </form>
     )
 }

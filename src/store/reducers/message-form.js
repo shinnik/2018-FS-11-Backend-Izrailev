@@ -1,19 +1,26 @@
 import * as actions from './actions';
 import getPosition from '../../../src/lib/components/utils/geolocation';
 import React from "react";
+import { setEndOfContenteditable, placeCaretAfterNode } from '../../lib/components/utils/CaretControl';
 
 const initialState = {
-  messages: []
+  messages: [],
+  emojiCounter: 0
 };
 
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.ADD_TEXT:
             let newMessages = [...state.messages];
-            if (action.event.target[0].value !== '') {
-                let text = action.event.target[0].value;
-                newMessages.push(text);
-                action.event.target[0].value = '';
+            if (action.event.target.innerHTML !== '') {
+                let content = action.event.target.innerHTML;
+                console.log(content, typeof content);
+                let message = {
+                    value: content,
+                    my: "yes"
+                };
+                newMessages.push(message);
+                action.event.target.innerHTML = '';
             }
             return {
                 ...state,
@@ -37,7 +44,11 @@ const messagesReducer = (state = initialState, action) => {
                 userPosition.latitude = position.coords.latitude.toFixed(5);
                 userPosition.longitude = position.coords.longitude.toFixed(5);
                 let geoMessage = 'Latitude: ' + userPosition.latitude + '\nLongitude: ' + userPosition.longitude;
-                messagesWithGeo.push(geoMessage);
+                let message = {
+                    value: geoMessage,
+                    my: "yes"
+                };
+                messagesWithGeo.push(message);
             });
             return {
                 ...state,
@@ -52,7 +63,11 @@ const messagesReducer = (state = initialState, action) => {
             }
             let messagesWithFiles = [...state.messages];
             let arrayToConcat = blobFileList.map((el, index) => (filelist[blobFileList.indexOf(el)].type !== 'image/png' && filelist[blobFileList.indexOf(el)].type !== 'image/jpeg') ? <div key={el.id}><a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a><br/> </div>: <div key={el.id}><img src={el} alt="nopic"></img><br /></div>);
-            messagesWithFiles.push(arrayToConcat);
+            let message = {
+                value: arrayToConcat,
+                my: "yes"
+            };
+            messagesWithFiles.push(message);
             action.event.target.value = '';
             return {
                 ...state,
@@ -60,18 +75,49 @@ const messagesReducer = (state = initialState, action) => {
             };
         case actions.ADD_BY_CLICK:
             let newMessagesAfterClick = [...state.messages];
-            if (action.input.value !== '') {
-                let text = action.input.value;
-                newMessagesAfterClick.push(text);
-                action.input.value = '';
+            if (action.input.innerHTML !== '') {
+                let content = action.input.innerHTML;
+                let message = {
+                    value: content,
+                    my: "yes"
+                };
+                newMessagesAfterClick.push(message);
+                action.input.innerHTML = '';
             }
             return {
                 ...state,
                 messages: newMessagesAfterClick
             };
+        case actions.ADD_EMOJI:
+            let cnt = state.emojiCounter + 1;
+            let input = document.querySelector('span#input');
+            if (input !== document.activeElement) {
+                input.focus();
+                setEndOfContenteditable(input);
+            }
+            let iconElementId = action.event.target.getAttribute('class');
+            console.log(iconElementId);
+            // let rng = document.createRange();
+            // let sel = document.getSelection();
+            // rng.selectNodeContents(input);
+            // rng.collapse();
+            // sel.addRange(rng);
+            // // sel.addRange(rng);
+            // console.log(input.selectionStart);
+            let el = "<span contenteditable=false" +  " title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"; //&#8203;
+            console.log(el);
+            document.execCommand('insertHTML', false, el);
+            return {
+                ...state,
+                emojiCounter: cnt
+            };
         case actions.MESSAGE_RECEIVED:
             let messagesWithFromCompanionOne = [...state.messages];
-            messagesWithFromCompanionOne.push(action.payload.data.text);
+            message = {
+                value: action.payload.data.text,
+                my: "no"
+            };
+            messagesWithFromCompanionOne.push(message);
             console.log(messagesWithFromCompanionOne);
             return {
                 ...state,

@@ -18,7 +18,7 @@ ul {
 }
 
 .yes {
-    display: inline-block;
+    display: inline-flex;
     padding: 12px 12px 24px 12px;
     clear: both;
     border-radius: 10px 10px 0 10px;
@@ -35,7 +35,7 @@ ul {
 }
 
 .no {
-    display: inline-block;
+    display: inline-flex;
     padding: 12px 12px 24px 12px;
     clear: both;
     border-radius: 10px 10px 0 10px;

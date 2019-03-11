@@ -77,7 +77,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "css-sprite-loader": "^0.3.1"
+    "css-sprite-loader": "^0.3.1",
+    "worker-loader": "^2.0.0"
   },
   "jest": {
     "collectCoverageFrom": [

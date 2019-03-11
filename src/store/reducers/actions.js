@@ -1,3 +1,4 @@
+export const PRELOAD_MESSAGES = 'PRELOAD_MESSAGES';
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const ADD_FILE = 'ADD_FILE';
 export const ADD_TEXT = 'ADD_TEXT';

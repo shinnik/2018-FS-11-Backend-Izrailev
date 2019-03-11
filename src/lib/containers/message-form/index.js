@@ -8,22 +8,47 @@ import AttachForm from '../../components/attach-form/attach-form'
 import SendButton from '../../components/send-button/send-button'
 import * as actions from '../../../store/reducers/actions'
 import Keyboard from "../Keyboard/EmojiKeyboard";
+import {SharedWorkerContext} from "../../../sharedWorkerContext";
 
 class MessageForm extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    handleResp = (event) => {
+        console.log(event.data)
+    }
+
+    componentWillMount() {
+        const workers = [
+            // list of workers with different behaviour respectively to action
+        ]
+        this.consoleWorker = this.context(this.handleResp);
+        this.props.onPreloadMessages(this.consoleWorker)
+    }
+
+    componentWillUnmount() {
+        this.consoleWorker.then((worker) => {worker.port.postMessage('disconnect')})
+    }
+
     render() {
+        // console.log(this.context);
+        // let worker = this.context(this.handleResp);
+        // let worker = this.context;
         return (
             //<style>${styles.toString()}</style>
             <div className={classes.FooterContainer}>
                 <MessageList messages={this.props.messages}></MessageList>
                 {/*<DropZone></DropZone>*/}
                 <span className={classes.FormContainer}>
-                    <GeoForm onSendGeo={this.props.onGeoMessage}></GeoForm>
-                    <FormInput placeholder="Cообщение"
+                    <GeoForm worker={this.consoleWorker} onSendGeo={this.props.onGeoMessage}></GeoForm>
+                    <FormInput worker={this.consoleWorker} placeholder="Cообщение"
                                onMessageCommit={this.props.onHandleMessage}>
                     </FormInput>
                     {/*<div className={classes.KeyboardContainer}><Keyboard/></div>*/}
                     <Keyboard onEmojiClick={this.props.onEmojiClick}/>
-                    <SendButton onButtonClick={this.props.onSendButtonClick}></SendButton>
+                    <SendButton worker={this.consoleWorker} onButtonClick={this.props.onSendButtonClick}></SendButton>
                     <AttachForm onSendFile={this.props.onFileMessage}></AttachForm>
                 </span>
             </div>
@@ -38,32 +63,36 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onHandleMessage: (e) => {
-            if (e.which === 13) {
-                e.preventDefault();
-                dispatch({type: actions.ADD_TEXT, event: e})
+        onPreloadMessages: (loadWorker) => {
+            dispatch({type: actions.PRELOAD_MESSAGES, loadWorker: loadWorker})
+        },
+        onHandleMessage: (pld) => {
+            if (pld.event.which === 13) {
+                pld.event.preventDefault();
+                dispatch({type: actions.ADD_TEXT, payload: pld})
             }
         },
-        onGeoMessage: (e) => {
-            e.preventDefault();
-            dispatch({type: actions.ADD_LOCATION, event: e})
+        onGeoMessage: (pld) => {
+            pld.event.preventDefault();
+            dispatch({type: actions.ADD_LOCATION, event: pld.event})
         },
         onFileMessage: (e) => {
            e.preventDefault();
            dispatch({type: actions.ADD_FILE, event: e})
         },
-        onSendButtonClick: (e) => {
-            e.preventDefault();
+        onSendButtonClick: (pld) => {
+            pld.event.preventDefault();
             let input = document.querySelector('span#input');
-            console.log(input);
-            dispatch({type: actions.ADD_BY_CLICK, input: input})
+            // console.log('sendbutton');
+            pld["input"] = input;
+            dispatch({type: actions.ADD_BY_CLICK, payload: pld})
         },
         onEmojiClick: (e) => {
             e.preventDefault();
-            console.log('here');
             dispatch({type: actions.ADD_EMOJI, event: e})
         }
     }
 };
 
+MessageForm.contextType = SharedWorkerContext;
 export default connect(mapStateToProps, mapDispatchToProps)(MessageForm);

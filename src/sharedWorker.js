@@ -8,13 +8,9 @@ export default ((self) => {
     const URL = 'http://127.0.0.1:5050/api';
     self.addEventListener('connect', (event) => {
         const port = event.source;
-        // if (!ports.includes(port)) {
-        //     console.log(ports.includes(port), 'includes?');
         ports.push(port);
-        // }
         console.log(port);
         port.addEventListener('message', (event) => {
-            // console.log(port, event.target);
             if (event.data.apiName === API_methods.SEND_MESSAGE) {
                 console.log('sending message');
                 let data = {
@@ -33,8 +29,6 @@ export default ((self) => {
                     body: JSON.stringify(data),
                     mode: "no-cors"
                 };
-
-                // console.log(request);
                 if (event.data.fetch) {
                     fetch(URL,request)
                         .then((response) =>  {
@@ -42,21 +36,15 @@ export default ((self) => {
                             ports.filter(port => port !== event.target).forEach((port) => {
                                 port.postMessage(res)
                             });
-                            // ports.forEach((port) => port.postMessage(res))
                         })
-                        // .then(data => {
-                        //     port.postMessage(data);
-                        // })
                         .catch(error => console.log(error))
-                }
-                else {
+                } else {
                     ports.filter(port => port !== event.target).forEach((port) => {
                         port.postMessage('SEND MESSAGE API SYNCHRONIZE')
                     });
                 }
             }
             if (event.data.apiName === API_methods.LIST_CHATS) {
-                // console.log('list chats');
                 let data = {
                     jsonrpc: "2.0",
                     method: event.data.apiName,

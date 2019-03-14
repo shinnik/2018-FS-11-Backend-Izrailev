@@ -12,18 +12,11 @@ import {SharedWorkerContext} from "../../../sharedWorkerContext";
 
 class MessageForm extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     handleResp = (event) => {
         console.log(event.data)
     }
 
     componentWillMount() {
-        const workers = [
-            // list of workers with different behaviour respectively to action
-        ]
         this.consoleWorker = this.context(this.handleResp);
         this.props.onPreloadMessages(this.consoleWorker)
     }
@@ -33,9 +26,6 @@ class MessageForm extends Component {
     }
 
     render() {
-        // console.log(this.context);
-        // let worker = this.context(this.handleResp);
-        // let worker = this.context;
         return (
             //<style>${styles.toString()}</style>
             <div className={classes.FooterContainer}>

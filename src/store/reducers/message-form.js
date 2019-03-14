@@ -1,7 +1,7 @@
 import * as actions from './actions';
 import getPosition from '../../../src/lib/components/utils/geolocation';
 import React from "react";
-import { setEndOfContenteditable, placeCaretAfterNode } from '../../lib/components/utils/CaretControl';
+import { setEndOfContenteditable } from '../../lib/components/utils/CaretControl';
 
 const initialState = {
   messages: [],
@@ -143,7 +143,10 @@ const messagesReducer = (state = initialState, action) => {
             }
             let iconElementId = action.event.target.getAttribute('class');
             console.log(iconElementId);
-            let el = "<span contenteditable=false" +  " title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"; //&#8203;
+            let ele = "<span contenteditable=false";
+            // +  " title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"; //&#8203;
+            // let ele = "<span contenteditable=false title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"
+            let el = ele.concat(" title=emoji", ` class=${iconElementId}`, ` id=${cnt}`, "></span>");
             document.execCommand('insertHTML', false, el);
             return {
                 ...state,

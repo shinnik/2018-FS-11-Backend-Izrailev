@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-// import emojis from 'emojis';
 import classes from './Keyboard.module.css'
-import connect from "react-redux/es/connect/connect";
-import * as actions from '../../../store/reducers/actions';
 import { SharedWorkerContext } from '../../../sharedWorkerContext';
-
-
-const URL = "./png/labeled/32/people";
 
 const EMOJIS = [
     {
@@ -40,10 +34,6 @@ const EMOJIS = [
 ];
 
 class Keyboard extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         // const emojiList = EMOJIS.map((emoji, i) => <span key={i} style={{background: url(`${URL}/${emoji.name}.png?sprite`)}}/>);

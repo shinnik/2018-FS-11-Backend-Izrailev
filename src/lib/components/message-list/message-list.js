@@ -17,8 +17,6 @@ class MessageList extends Component {
         let time = date.getHours() + ':' + date.getMinutes();
 
         let preparedMessages = this.props.messages.map((el, index) => {
-            // console.log(el); dangerouslySetInnerHTML={{__html: innHTML}}
-            // console.log();
             if (typeof el.value === "string") {
                 let innHTML = `${el.value} <div class=${classes.time}>${time}</div>`;
                 let comp = <li dangerouslySetInnerHTML={{__html: innHTML}} className={this.myOrNot(el)}
@@ -29,7 +27,8 @@ class MessageList extends Component {
             if (typeof el.value === "object") {
                 let comp = <li className={this.myOrNot(el)} key={index}>{el.value.map((elem, i) => <div key={i}>{elem}</div>)}<div className={classes.time}>{time}</div></li>;
                 return comp;
-            }}).reverse();
+            }
+            return null}).reverse();
 
         return (
             <div>

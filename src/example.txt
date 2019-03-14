@@ -1,0 +1,2 @@
+curl -X POST -H "Authorization:key=AAAAc801914:APA91bGq7O1_JPfcTxOENh8l0cw-F7WBUYL1jZzcCL2X99iMB1fZRnnQXSY1MaB492fXGb7WOMyjR2pyN--8o0TQT4RmNN4wQgpS2DfAXOfK_Ry8VWmp1DwfiCrSdTyWE0XWaYChcnkk" -H "Content-Type: application/json" -d '{"notification": {"title": "Messenger","body": "Click the button!","click_action": "http://localhost:3001/","icon": "http://url-to-an-icon/icon.png"},"to": "fUIqus9V1Gg:APA91bEyzGWJhM-yWOro_UoswZCqBqnUWQJ3v7vcx8hWCtArXQ5bGYfbcTwG-lRNcGqTpCoqSbRH4upKVTXO3czSOQxBsc0WsWRKuZ6WxhRmxcr9hvVFEJlDQdUPOI3uWWWYv9PpFWra"}' https://fcm.googleapis.com/fcm/send
+

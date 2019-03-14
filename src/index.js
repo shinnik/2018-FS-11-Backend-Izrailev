@@ -11,6 +11,8 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import chatReducer from "./store/reducers/chats";
+import firebase from "firebase";
+
 
 let rootReducer = combineReducers({
     msg: messagesReducer,

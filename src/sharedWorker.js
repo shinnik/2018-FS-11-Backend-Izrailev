@@ -1,5 +1,11 @@
 export default ((self) => {
     const ports = [];
+    const API_methods = {
+        SEND_MESSAGE: "send_message",
+        LIST_CHATS: "list_chats",
+        LIST_MESSAGES: "list_messages"
+    };
+    const URL = 'http://127.0.0.1:5050/api';
     self.addEventListener('connect', (event) => {
         const port = event.source;
         // if (!ports.includes(port)) {
@@ -9,7 +15,7 @@ export default ((self) => {
         console.log(port);
         port.addEventListener('message', (event) => {
             // console.log(port, event.target);
-            if (event.data.apiName === "send_message") {
+            if (event.data.apiName === API_methods.SEND_MESSAGE) {
                 console.log('sending message');
                 let data = {
                     jsonrpc: "2.0",
@@ -30,7 +36,7 @@ export default ((self) => {
 
                 // console.log(request);
                 if (event.data.fetch) {
-                    fetch('http://127.0.0.1:5050',request)
+                    fetch(URL,request)
                         .then((response) =>  {
                             let res = JSON.stringify(response);
                             ports.filter(port => port !== event.target).forEach((port) => {
@@ -49,7 +55,7 @@ export default ((self) => {
                     });
                 }
             }
-            if (event.data.apiName === "list_chats") {
+            if (event.data.apiName === API_methods.LIST_CHATS) {
                 // console.log('list chats');
                 let data = {
                     jsonrpc: "2.0",
@@ -68,7 +74,7 @@ export default ((self) => {
 
                 console.log(request);
                 if (event.data.fetch) {
-                    fetch('http://127.0.0.1:5050',request)
+                    fetch(URL,request)
                         .then((response) =>  {
                             let res = JSON.stringify(response);
                             ports.filter(port => port !== event.target).forEach((port) => {
@@ -85,7 +91,7 @@ export default ((self) => {
                 }
 
             }
-            if (event.data.apiName === "list_messages") {
+            if (event.data.apiName === API_methods.LIST_MESSAGES) {
                 console.log('downloading messages');
                 let data = {
                     jsonrpc: "2.0",
@@ -106,7 +112,7 @@ export default ((self) => {
 
                 // console.log(request);
                 if (event.data.fetch) {
-                    fetch('http://127.0.0.1:5050',request)
+                    fetch(URL, request)
                         .then((response) =>  {
                             let res = JSON.stringify(response);
                             ports.filter(port => port !== event.target).forEach((port) => {

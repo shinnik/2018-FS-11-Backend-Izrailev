@@ -9,7 +9,10 @@ import * as actions from './store/actions';
 import Centrifuge from './lib/containers/Centrifuge/Centrifuge';
 import { SharedWorkerContext } from './sharedWorkerContext';
 import workerCode from "./sharedWorker";
+import initFirebaseMessaging from './lib/components/utils/initFirebase'
 
+
+initFirebaseMessaging();
 
 
 const Main = () => (
@@ -24,49 +27,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.sh = this.getSharedWorker;
-        // console.log(sh);
     }
-
-    // getSharedWorker () {
-    //     let getHandlerInside = (handler) => {
-    //         const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
-    //         return new Promise((res, rej) => {
-    //             const reader = new FileReader();
-    //             reader.addEventListener('loadend', (event) => {
-    //                 // console.log('load ended');
-    //                 const worker = new SharedWorker(event.target.result);
-    //                 worker.port.addEventListener('message', handler.bind(this));
-    //                 worker.port.start();
-    //                 window.addEventListener('beforeunload', () => {
-    //                     worker.port.postMessage('disconnect');
-    //                 });
-    //                 res(worker);
-    //             });
-    //             reader.addEventListener('error', rej);
-    //             reader.readAsDataURL(workerFile);
-    //         });
-    //     };
-    //     return getHandlerInside;
-    // }
-
-    // getSharedWorker () {
-    //         const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
-    //         return new Promise((res, rej) => {
-    //             const reader = new FileReader();
-    //             reader.addEventListener('loadend', (event) => {
-    //                 // console.log('load ended');
-    //                 const worker = new SharedWorker(event.target.result);
-    //                 worker.port.addEventListener('message', this.onWorkerMessage.bind(this));
-    //                 worker.port.start();
-    //                 window.addEventListener('beforeunload', () => {
-    //                     worker.port.postMessage('disconnect');
-    //                 });
-    //                 res(worker);
-    //             });
-    //             reader.addEventListener('error', rej);
-    //             reader.readAsDataURL(workerFile);
-    //         });
-    // }
 
     getSharedWorker (handler) {
         const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
@@ -86,10 +47,6 @@ class App extends Component {
             reader.readAsDataURL(workerFile);
         });
     }
-
-    // onWorkerMessage (event) {
-    //     console.log(event.data);
-    // };
 
     componentDidMount() {
         this.props.onTryAutoLogin();

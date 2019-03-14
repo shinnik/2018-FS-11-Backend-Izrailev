@@ -1,26 +1,46 @@
 import * as actions from './actions';
 import getPosition from '../../../src/lib/components/utils/geolocation';
 import React from "react";
-import { setEndOfContenteditable, placeCaretAfterNode } from '../../lib/components/utils/CaretControl';
+import { setEndOfContenteditable } from '../../lib/components/utils/CaretControl';
 
 const initialState = {
   messages: [],
-  emojiCounter: 0
+  emojiCounter: 0,
 };
 
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actions.PRELOAD_MESSAGES:
+            action.loadWorker.then((worker) => worker.port.postMessage({
+                apiName: 'list_messages',
+                fetch: false,
+                data: {
+                    chat_id: '2',
+                    limit: '30',
+                }
+            }));
+            return state;
         case actions.ADD_TEXT:
+            let content = action.payload.event.target.innerHTML;
+            action.payload.worker.then((worker) => worker.port.postMessage({
+                apiName: 'send_message',
+                fetch: false,
+                data: {
+                    user_id: '4',
+                    chat_id: '2',
+                    content: content
+                }
+            }));
             let newMessages = [...state.messages];
-            if (action.event.target.innerHTML !== '') {
-                let content = action.event.target.innerHTML;
+            if (action.payload.event.target.innerHTML !== '') {
+                let content = action.payload.event.target.innerHTML;
                 console.log(content, typeof content);
                 let message = {
                     value: content,
                     my: "yes"
                 };
                 newMessages.push(message);
-                action.event.target.innerHTML = '';
+                action.payload.event.target.innerHTML = '';
             }
             return {
                 ...state,
@@ -62,7 +82,25 @@ const messagesReducer = (state = initialState, action) => {
                 blobFileList.push(blobFile);
             }
             let messagesWithFiles = [...state.messages];
-            let arrayToConcat = blobFileList.map((el, index) => (filelist[blobFileList.indexOf(el)].type !== 'image/png' && filelist[blobFileList.indexOf(el)].type !== 'image/jpeg') ? <div key={el.id}><a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a><br/> </div>: <div key={el.id}><img src={el} alt="nopic"></img><br /></div>);
+            console.log(blobFileList);
+            let arrayToConcat = blobFileList.map((el, index) => {
+                if ((filelist[blobFileList.indexOf(el)].type !== 'image/png') && (filelist[blobFileList.indexOf(el)].type !== 'image/jpeg')) {
+                     return (
+                    <div key={el.id}>
+                        <a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a>
+                        <br/>
+                     </div>
+                     )}
+                else {
+                    return (
+                        <div key={el.id}>
+                            <img src={el} alt="nopic"/>
+                            <br />
+                        </div>
+                    )
+                }
+            });
+            console.log(arrayToConcat);
             let message = {
                 value: arrayToConcat,
                 my: "yes"
@@ -75,14 +113,22 @@ const messagesReducer = (state = initialState, action) => {
             };
         case actions.ADD_BY_CLICK:
             let newMessagesAfterClick = [...state.messages];
-            if (action.input.innerHTML !== '') {
-                let content = action.input.innerHTML;
+            action.payload.worker.then((worker) => worker.port.postMessage({
+                apiName: 'send_message',
+                data: {
+                    user_id: '4',
+                    chat_id: '2',
+                    content: action.payload.input.value
+                }
+            }))
+            if (action.payload.input.innerHTML !== '') {
+                let content = action.payload.input.innerHTML;
                 let message = {
                     value: content,
                     my: "yes"
                 };
                 newMessagesAfterClick.push(message);
-                action.input.innerHTML = '';
+                action.payload.input.innerHTML = '';
             }
             return {
                 ...state,
@@ -97,15 +143,10 @@ const messagesReducer = (state = initialState, action) => {
             }
             let iconElementId = action.event.target.getAttribute('class');
             console.log(iconElementId);
-            // let rng = document.createRange();
-            // let sel = document.getSelection();
-            // rng.selectNodeContents(input);
-            // rng.collapse();
-            // sel.addRange(rng);
-            // // sel.addRange(rng);
-            // console.log(input.selectionStart);
-            let el = "<span contenteditable=false" +  " title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"; //&#8203;
-            console.log(el);
+            let ele = "<span contenteditable=false";
+            // +  " title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"; //&#8203;
+            // let ele = "<span contenteditable=false title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"
+            let el = ele.concat(" title=emoji", ` class=${iconElementId}`, ` id=${cnt}`, "></span>");
             document.execCommand('insertHTML', false, el);
             return {
                 ...state,
@@ -118,7 +159,6 @@ const messagesReducer = (state = initialState, action) => {
                 my: "no"
             };
             messagesWithFromCompanionOne.push(message);
-            console.log(messagesWithFromCompanionOne);
             return {
                 ...state,
                 messages: messagesWithFromCompanionOne

@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import chatReducer from "./store/reducers/chats";
 
+
 let rootReducer = combineReducers({
     msg: messagesReducer,
     hdr: headerReducer,

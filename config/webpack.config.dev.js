@@ -126,6 +126,7 @@ module.exports = {
         chunkFilename: 'static/js/[name].chunk.js',
         // This is the URL that app is served from. We use "/" in development.
         publicPath: publicPath,
+        globalObject: "this",
         // Point sourcemap entries to original disk location (format as URL on Windows)
         devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
@@ -224,6 +225,13 @@ module.exports = {
                 // match the requirements. When no loader matches it will fall
                 // back to the "file" loader at the end of the loader list.
                 oneOf: [
+                    {
+                        test: /\.worker\.js$/,
+                        include: paths.appSrc,
+                        use: {
+                            loader: 'worker-loader'
+                        }
+                    },
                     // "url" loader works like "file" loader except that it embeds assets
                     // smaller than specified limit in bytes as data URLs to avoid requests.
                     // A missing `test` is equivalent to a match.

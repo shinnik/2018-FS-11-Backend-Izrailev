@@ -7,7 +7,12 @@ import Auth from './lib/containers/Auth/Auth';
 import {connect} from "react-redux";
 import * as actions from './store/actions';
 import Centrifuge from './lib/containers/Centrifuge/Centrifuge';
+import { SharedWorkerContext } from './sharedWorkerContext';
+import workerCode from "./sharedWorker";
+import initFirebaseMessaging from './lib/components/utils/initFirebase'
 
+
+initFirebaseMessaging();
 
 
 const Main = () => (
@@ -18,11 +23,37 @@ const Main = () => (
 );
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.sh = this.getSharedWorker;
+    }
+
+    getSharedWorker (handler) {
+        const workerFile = new Blob([`(${workerCode})(self)`], {type: 'text/javascript'});
+        return new Promise((res, rej) => {
+            const reader = new FileReader();
+            reader.addEventListener('loadend', (event) => {
+                // console.log('load ended');
+                const worker = new SharedWorker(event.target.result);
+                worker.port.addEventListener('message', handler.bind(this));
+                worker.port.start();
+                window.addEventListener('beforeunload', () => {
+                    worker.port.postMessage('disconnect');
+                });
+                res(worker);
+            });
+            reader.addEventListener('error', rej);
+            reader.readAsDataURL(workerFile);
+        });
+    }
+
     componentDidMount() {
         this.props.onTryAutoLogin();
     }
 
     render() {
+
         let routes = (
             <Layout>
                 <Switch>
@@ -48,12 +79,14 @@ class App extends Component {
             )
         }
         return (
-	<div>
-		<Router>
-            {routes}
-        </Router>
-		<Centrifuge/>
-	</div>
+                <div>
+                    <SharedWorkerContext.Provider value={this.sh}>
+                        <Router>
+                            {routes}
+                        </Router>
+                        <Centrifuge/>
+                    </SharedWorkerContext.Provider>
+                </div>
 
         );
 

@@ -83,7 +83,23 @@ const messagesReducer = (state = initialState, action) => {
             }
             let messagesWithFiles = [...state.messages];
             console.log(blobFileList);
-            let arrayToConcat = blobFileList.map((el, index) => (filelist[blobFileList.indexOf(el)].type !== 'image/png' && filelist[blobFileList.indexOf(el)].type !== 'image/jpeg') ? <div key={el.id}><a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a><br/> </div>: <div key={el.id}><img src={el} alt="nopic"/><br /></div>);
+            let arrayToConcat = blobFileList.map((el, index) => {
+                if ((filelist[blobFileList.indexOf(el)].type !== 'image/png') && (filelist[blobFileList.indexOf(el)].type !== 'image/jpeg')) {
+                     return (
+                    <div key={el.id}>
+                        <a key={index} href={el}>{filelist[blobFileList.indexOf(el)].name}</a>
+                        <br/>
+                     </div>
+                     )}
+                else {
+                    return (
+                        <div key={el.id}>
+                            <img src={el} alt="nopic"/>
+                            <br />
+                        </div>
+                    )
+                }
+            });
             console.log(arrayToConcat);
             let message = {
                 value: arrayToConcat,

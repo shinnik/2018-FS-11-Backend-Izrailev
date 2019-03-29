@@ -7,13 +7,72 @@
     border: 0.5px solid darkgray;
 }
 
+.colorpulse {
+    position: absolute;
+    z-index: 0;
+    animation: colorpulse 2s infinite;
+    width: 60%;
+    height: 90%;
+}
+
+
 .input {
     display: inline-flex;
+    z-index: 2;
+    position: absolute;
     align-items: center;
     align-content: center;
     text-align: left;
     outline: none;
-    width: 100%;
+    width: 60%;
     height: 30px;
     padding-left: 30px;
+}
+
+.form:hover > .colorpulse {
+    display: none;
+    animation: none;
+}
+
+.form:focus-within > .colorpulse {
+    display: none;
+    animation: none;
+}
+
+.form:active > .colorpulse {
+    display: none;
+    animation: none;
+}
+
+@-webkit-keyframes colorpulse {
+    0% {
+        background-color: #F3E5F5;
+        opacity: 0;
+    }
+    50% {
+        background-color: #F3E5F5;
+        opacity: 0.6;
+    }
+    100% {
+        background-color: #F3E5F5;
+        opacity: 0;
+    }
+}
+
+@keyframes colorpulse {
+    0% {
+        background-color: #F3E5F5;
+        -moz-opacity: 0;
+        opacity: 0;
+    }
+    50% {
+        background-color: #F3E5F5;
+        -moz-opacity: 0.6;
+        opacity: 0.6;
+    }
+    100% {
+        background-color: #F3E5F5;
+        -moz-opacity: 0;
+        opacity: 0;
+    }
 }

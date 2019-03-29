@@ -32,6 +32,48 @@ ul {
     max-width: 80%;
     min-width: 30px;
     box-shadow: 1px 1px 1px lightslategray;
+    animation-name: slideInFromRight;
+    animation-timing-function: ease-out;
+    /*transition-timing-function: ease-out;*/
+    animation-duration: 200ms;
+}
+
+@-webkit-keyframes slideInFromRight {
+    0% {
+        -webkit-transform: translateX(100%);
+    }
+    100% {
+        -webkit-transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes slideInFromLeft {
+    0% {
+        -webkit-transform: translateX(-100%);
+    }
+    100% {
+        -webkit-transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+        -moz-transform: translateX(0);
+    }
 }
 
 .no {
@@ -50,6 +92,10 @@ ul {
     max-width: 80%;
     min-width: 30px;
     box-shadow: 1px 1px 1px lightslategray;
+    animation-name: slideInFromLeft;
+    animation-timing-function: ease-out;
+    /*transition-timing-function: ease-out;*/
+    animation-duration: 200ms;
 }
 
 .time {

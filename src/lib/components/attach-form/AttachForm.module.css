@@ -3,6 +3,12 @@
     display: inline-flex;
     align-items: center;
     width: 10%;
+    transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s;
+}
+
+.AttachFormButton:hover {
+    background-color: #F3E5F5;
 }
 
 .InvisibleInput {

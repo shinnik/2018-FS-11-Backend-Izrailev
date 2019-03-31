@@ -13,6 +13,7 @@ const FormInput = (props) => {
 
     return (
         <form className={classes.form}>
+            <span className={classes.colorpulse}></span>
             <span id="input" className={classes.input} placeholder={props.placeholder} onKeyPress={onMiddlewareMessageCommit} contentEditable={true} />
         </form>
     )

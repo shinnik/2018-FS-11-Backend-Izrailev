@@ -39,7 +39,7 @@ const messagesReducer = (state = initialState, action) => {
                     value: content,
                     my: "yes"
                 };
-                newMessages.push(message);
+                newMessages = [...newMessages, message];
                 action.payload.event.target.innerHTML = '';
             }
             return {
@@ -66,9 +66,9 @@ const messagesReducer = (state = initialState, action) => {
                 let geoMessage = 'Latitude: ' + userPosition.latitude + '\nLongitude: ' + userPosition.longitude;
                 let message = {
                     value: geoMessage,
-                    my: "yes"
+                    my: "no"
                 };
-                messagesWithGeo.push(message);
+                messagesWithGeo = [...messagesWithGeo, message];
             });
             return {
                 ...state,
@@ -127,7 +127,7 @@ const messagesReducer = (state = initialState, action) => {
                     value: content,
                     my: "yes"
                 };
-                newMessagesAfterClick.push(message);
+                newMessagesAfterClick = [...newMessagesAfterClick, message];
                 action.payload.input.innerHTML = '';
             }
             return {
@@ -144,8 +144,7 @@ const messagesReducer = (state = initialState, action) => {
             let iconElementId = action.event.target.getAttribute('class');
             console.log(iconElementId);
             let ele = "<span contenteditable=false";
-            // +  " title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"; //&#8203;
-            // let ele = "<span contenteditable=false title=emoji" + ` class=${iconElementId}` + ` id=${cnt}` + "></span>"
+            //  the only one appropriate usage of template literal in my project
             let el = ele.concat(" title=emoji", ` class=${iconElementId}`, ` id=${cnt}`, "></span>");
             document.execCommand('insertHTML', false, el);
             return {
@@ -158,7 +157,7 @@ const messagesReducer = (state = initialState, action) => {
                 value: action.payload.data.text,
                 my: "no"
             };
-            messagesWithFromCompanionOne.push(message);
+            messagesWithFromCompanionOne = [...messagesWithFromCompanionOne, message];
             return {
                 ...state,
                 messages: messagesWithFromCompanionOne

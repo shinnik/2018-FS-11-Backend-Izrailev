@@ -9,7 +9,7 @@
     bottom: 60px;
     height: calc(100% - 60px);
     flex-direction: column-reverse;
-    align-items: flex-end;
+    /*align-items: flex-end;*/
     width: 100%;
 }
 
@@ -22,7 +22,8 @@ ul {
     padding: 12px 12px 24px 12px;
     clear: both;
     border-radius: 10px 10px 0 10px;
-    float: right;
+    /*float: right;*/
+    align-self: flex-end;
     background: #F3E5F5;
     color: black;
     position: relative;
@@ -81,11 +82,10 @@ ul {
     padding: 12px 12px 24px 12px;
     clear: both;
     border-radius: 10px 10px 0 10px;
-    float: left;
+    align-self: flex-start;
     background: greenyellow;
     color: black;
     position: relative;
-    right: 87%;
     margin: 4px 10px;
     word-wrap: break-word;
     word-break: break-all;

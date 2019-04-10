@@ -1,20 +1,20 @@
 import classes from "./FormInput.module.css";
 import React from "react";
 
-const FormInput = (props) => {
+const FormInput = ({worker, onMessageCommit, placeholder}) => {
 
     const onMiddlewareMessageCommit = (event) => {
         let payload = {
-            worker: props.worker,
+            worker: worker,
             event: event
         };
-        props.onMessageCommit(payload)
+        onMessageCommit(payload)
     };
 
     return (
         <form className={classes.form}>
             <span className={classes.colorpulse}></span>
-            <span id="input" className={classes.input} placeholder={props.placeholder} onKeyPress={onMiddlewareMessageCommit} contentEditable={true} />
+            <span id="input" className={classes.input} placeholder={placeholder} onKeyPress={onMiddlewareMessageCommit} contentEditable={true} />
         </form>
     )
 }

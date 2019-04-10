@@ -1,14 +1,14 @@
 import React from 'react';
 import classes from './SendButton.module.css'
 
-const SendButton = (props) => {
+const SendButton = ({worker, onButtonClick}) => {
 
     const onMiddlewareButtonClick = (event) => {
         let payload = {
-            worker: props.worker,
+            worker: worker,
             event: event
         };
-        props.onButtonClick(payload)
+        onButtonClick(payload)
     };
 
     return (

@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import {authStart, authSuccess, authFailed} from '../actions/auth'
 
 const initialState = {
     token: null,

@@ -8,7 +8,6 @@ const initialState = {
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.LOAD_CHATS:
-            // console.log(action.payload);
             action.loadWorker.then((worker) => worker.port.postMessage({
                 apiName: 'list_chats',
                 fetch: false,
@@ -18,7 +17,6 @@ const chatReducer = (state = initialState, action) => {
             }));
             return {
                 ...state,
-                // name: action.payload
             };
         default:
             return {

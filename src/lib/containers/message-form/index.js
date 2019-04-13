@@ -73,7 +73,6 @@ const mapDispatchToProps = dispatch => {
         onSendButtonClick: (pld) => {
             pld.event.preventDefault();
             let input = document.querySelector('span#input');
-            // console.log('sendbutton');
             pld["input"] = input;
             dispatch({type: actions.ADD_BY_CLICK, payload: pld})
         },

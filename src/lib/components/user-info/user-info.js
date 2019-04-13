@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from "../../containers/Header/Header.module.css";
 
-const UserInfo = (props) => {
+const UserInfo = ({name, isAuthorized}) => {
     let icon;
-    if (props.isAuthorized === true) {
+    if (isAuthorized === true) {
         icon = 'thumb_up'
     }
     else {
@@ -11,7 +11,7 @@ const UserInfo = (props) => {
     }
     return (
         <div className={classes.userInfo}>
-            <div className={classes.name}>{props.name}</div>
+            <div className={classes.name}>{name}</div>
             <i className={classes.MaterialIconsForOnlineStatus}>{icon}</i>
         </div>
     )

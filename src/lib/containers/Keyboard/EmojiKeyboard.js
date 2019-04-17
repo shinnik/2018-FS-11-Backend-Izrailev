@@ -1,37 +1,7 @@
 import React, { Component } from 'react';
 import classes from './Keyboard.module.css'
 import { SharedWorkerContext } from '../../../sharedWorkerContext';
-
-const EMOJIS = [
-    {
-        name: 'smiling_face',
-        code: '::):'
-    },
-    {
-        name: 'raised_hand',
-        code: ':rh:'
-    },
-    {
-        name: 'frowning_face',
-        code: '::(:'
-    },
-    {
-        name: 'raised_fist',
-        code: ':fist:'
-    },
-    {
-        name: 'writing_hand',
-        code: ':writh:'
-    },
-    {
-        name: 'victory_hand',
-        code: ':vic:'
-    },
-    {
-        name: 'pointing_up',
-        code: ':pu:'
-    }
-];
+import { EMOJIS } from "./emojis";
 
 class Keyboard extends Component {
 

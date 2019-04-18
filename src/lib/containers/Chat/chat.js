@@ -4,6 +4,7 @@ import classes from './Chat.module.css';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/reducers/actions'
 import {SharedWorkerContext} from "../../../sharedWorkerContext";
+import { ChatForm } from '../../components/chat-form/ChatForm'
 
 class Chats extends Component {
 
@@ -17,7 +18,7 @@ class Chats extends Component {
         console.log(event.data)
     }
 
-    componentWillUnmount() {
+    componentDidMount() {
         this.consoleWorker.then((worker) => {worker.port.postMessage('disconnect')})
     }
 
@@ -26,7 +27,7 @@ class Chats extends Component {
             <div className={classes.chatListContainer}>
                 <h1>Chats</h1>
                 <ul className="chat-list">
-                    <li className="linker"><Link to='/list_chats/chat_id=1'>{this.props.chatName + ' /- ' + this.props.unread.toString() + ' new messages.'}</Link></li>
+                    <li className={classes.linker}><ChatForm chatName={this.props.chatName} chatID={this.props.chatID} unread={this.props.unread} /></li>
                 </ul>
             </div>
         );
@@ -36,7 +37,8 @@ class Chats extends Component {
 const mapStateToProps = state => {
     return {
         chatName: state.ch.name,
-        unread: state.ch.numOfMessages
+        unread: state.ch.numOfMessages,
+        chatID: state.ch.chat_id
     }
 };
 

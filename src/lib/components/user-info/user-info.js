@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from "../../containers/Header/Header.module.css";
-import {UserAvatar} from "../sign-in-out-button/sign-in-out-button";
+import {UserAvatar} from "../UserAvatar/UserAvatar";
 
 const UserInfo = ({name, isAuthorized}) => {
     let icon;

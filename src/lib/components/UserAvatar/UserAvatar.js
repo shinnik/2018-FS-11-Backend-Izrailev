@@ -13,8 +13,6 @@ export const UserAvatar = () => {
         backgroundColor: '#222f3e',
         opacity: 0.5,
         top: 0,
-        fontFamily: 'Sawasdee',
-        fontSize: '40px',
 };
 
     const [clicked, setClicked] = useState(false);

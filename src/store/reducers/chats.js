@@ -1,8 +1,9 @@
 import * as actions from './actions';
 
 const initialState = {
-    name: 'ChatDefaultName',
-    numOfMessages: 0
+    name: 'Asya',
+    numOfMessages: 0,
+    chat_id: 1
 };
 
 const chatReducer = (state = initialState, action) => {

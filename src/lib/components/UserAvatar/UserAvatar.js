@@ -7,8 +7,10 @@ export const UserAvatar = () => {
 
 
     const [clicked, setClicked] = useState(false);
-    const shad = <div className={classes.shadowStyle}></div>;
-
+    const shad = <div onClick={() => setClicked(!clicked)}
+                      className={classes.shadowStyle}>
+                </div>;
+                      
     return (
         <div>
             {clicked && <div>{ReactDOM.createPortal(shad, document.body)}</div>}

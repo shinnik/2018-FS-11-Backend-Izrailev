@@ -2,7 +2,7 @@ import * as actions from './actions';
 
 const initialState = {
     name: 'Asya',
-    numOfMessages: 0,
+    numOfMessages: 1,
     chat_id: 1
 };
 

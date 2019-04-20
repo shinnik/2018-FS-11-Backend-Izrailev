@@ -4,7 +4,10 @@ import React from "react";
 import { setEndOfContenteditable } from '../../lib/components/utils/CaretControl';
 
 const initialState = {
-  messages: [],
+  messages: [{
+      value: 'Hello, Nikita!',
+      my: "no"
+  }],
   emojiCounter: 0,
 };
 

@@ -4,10 +4,9 @@ import {UserAvatar} from "../UserAvatar/UserAvatar";
 
 const UserInfo = ({name, isAuthorized}) => {
     let icon;
-    if (isAuthorized === true) {
+    if (isAuthorized) {
         icon = 'thumb_up'
-    }
-    else {
+    } else {
         icon = 'thumb_down'
     }
     return (

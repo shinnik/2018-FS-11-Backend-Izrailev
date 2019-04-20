@@ -40,4 +40,10 @@ describe('verify types', () => {
     test('input can not be undefined', () => {
         expect(() => getReadableSize()).toThrow('No arguments were passed');
     });
+    test('input can not be negative number', () => {
+        expect(getReadableSize(-5)).toBe(false);
+    });
+    test('input can not be float', () => {
+        expect(getReadableSize(6.85)).toBe(false);
+    });
 })

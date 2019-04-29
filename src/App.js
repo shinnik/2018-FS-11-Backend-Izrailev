@@ -4,6 +4,7 @@ import MessageForm from './lib/containers/message-form/index.js'
 
 class App extends Component {
   render() {
+      console.log(React.version);
     return (
         <div>
           <div class="head"></div>

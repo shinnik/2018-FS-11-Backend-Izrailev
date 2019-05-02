@@ -14,12 +14,14 @@ class MessageForm extends Component {
 
     handleResp = (event) => {
         console.log(event.data)
-    }
+    };
 
-    componentWillMount() {
-        this.consoleWorker = this.context(this.handleResp);
-        this.props.onPreloadMessages(this.consoleWorker)
-    }
+    componentDidMount() {
+        if (!this.consoleWorker) {
+            this.consoleWorker = this.context(this.handleResp);
+            this.props.onPreloadMessages(this.consoleWorker)
+        }
+    };
 
     componentWillUnmount() {
         this.consoleWorker.then((worker) => {worker.port.postMessage('disconnect')})

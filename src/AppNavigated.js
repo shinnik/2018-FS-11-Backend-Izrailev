@@ -10,7 +10,7 @@ import Centrifuge from './lib/containers/Centrifuge/Centrifuge';
 import { SharedWorkerContext } from './sharedWorkerContext';
 import workerCode from "./sharedWorker";
 import initFirebaseMessaging from './lib/components/utils/initFirebase'
-
+import ErrorBoundary from "./lib/containers/ErrorBoundary/ErrorBoundary";
 
 initFirebaseMessaging();
 
@@ -56,11 +56,11 @@ class App extends Component {
 
         let routes = (
             <Layout>
-                <Switch>
-                    <Route path='/main' exact component={Main}/>
-                    <Route path='/login' exact component={Auth}/>
-                    <Redirect to='/main'/>
-                </Switch>
+                    <Switch>
+                        <Route path='/main' exact component={Main}/>
+                        <Route path='/login' exact component={Auth}/>
+                        <Redirect to='/main'/>
+                    </Switch>
             </Layout>
         );
 
@@ -80,12 +80,14 @@ class App extends Component {
         }
         return (
                 <div>
-                    <SharedWorkerContext.Provider value={this.sh}>
-                        <Router>
-                            {routes}
-                        </Router>
-                        <Centrifuge/>
-                    </SharedWorkerContext.Provider>
+                    <ErrorBoundary>
+                        <SharedWorkerContext.Provider value={this.sh}>
+                            <Router>
+                                {routes}
+                            </Router>
+                            <Centrifuge/>
+                        </SharedWorkerContext.Provider>
+                    </ErrorBoundary>
                 </div>
 
         );

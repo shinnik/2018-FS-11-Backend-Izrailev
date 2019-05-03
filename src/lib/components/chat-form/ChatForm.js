@@ -10,7 +10,9 @@ export const ChatForm = ({chatName, unread, chatID}) => {
 
     return (
         <div onClick={() => setClicked(!clicked)} className={classes.container}>
-            <img src='https://joeschmoe.io/api/v1/female/random' className={classes.avatar}></img>
+            <img alt="noav"
+                 src='https://joeschmoe.io/api/v1/female/random'
+                 className={classes.avatar}></img>
             <div className={classes.name}>{chatName}</div>
             <div className={classes.messCounter}>{unread} new messages</div>
             {clicked && <Redirect to={pathToChat} />}

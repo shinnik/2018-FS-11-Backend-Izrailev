@@ -1,43 +1,36 @@
 import * as actionTypes from '../actions/actionTypes';
+import { fromJS } from 'immutable';
 
-const initialState = {
+const initialState = fromJS({
     token: null,
     error: null,
     loading: false,
-};
+});
 
 const authStart = (state, action) => {
-    return {
-        ...state,
-        loading: true,
-        error: null,
-    };
+    return state
+        .set('error', null)
+        .set('loading', true);
 };
 
 const authSuccess = (state, action) => {
-    return {
-        ...state,
-        token: action.payload.token,
-        error: null,
-        loading: false,
-    }
+    return state
+        .set('token', action.payload.token)
+        .set('error', null)
+        .set('loading', false);
 };
 
 const authFail = (state, action) => {
-    return {
-        ...state,
-        error: action.error,
-        loading: false
-    }
+    return state
+        .set('error', action.error)
+        .set('loading', false);
 };
 
 const logout = (state, action) => {
-    return {
-        ...state,
-        token: null,
-        error: null,
-        loading: false,
-    }
+    return state
+        .set('token', null)
+        .set('error', null)
+        .set('loading', false);
 }
 
 const reducer = (state = initialState, action) => {

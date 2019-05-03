@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classes from './MessageList.module.css';
 
-class MessageList extends Component {
+class MessageList extends PureComponent {
 
     myOrNot(message) {
         if (message.my === "yes")
@@ -12,7 +12,7 @@ class MessageList extends Component {
     }
 
     render() {
-        // console.log(this.props.messages);
+        console.log('MESSAGES', this.props.messages);
         let date = new Date();
         let time = date.getHours() + ':' + date.getMinutes();
 

@@ -1,10 +1,11 @@
 import * as actions from './actions';
+import { fromJS } from 'immutable';
 
-const initialState = {
+const initialState = fromJS({
     name: 'Asya',
     numOfMessages: 1,
     chat_id: 1
-};
+});
 
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -16,13 +17,9 @@ const chatReducer = (state = initialState, action) => {
                     user_id: '2'
                 }
             }));
-            return {
-                ...state,
-            };
+            return state;
         default:
-            return {
-                ...state
-            }
+            return state
     }
 };
 

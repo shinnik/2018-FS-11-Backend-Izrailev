@@ -2,14 +2,15 @@ import * as actions from './actions';
 import getPosition from '../../../src/lib/components/utils/geolocation';
 import React from "react";
 import { setEndOfContenteditable } from '../../lib/components/utils/CaretControl';
+import { Map } from 'immutable';
 
-const initialState = {
+const initialState = Map({
   messages: [{
       value: 'Hello, Nikita!',
       my: "no"
   }],
   emojiCounter: 0,
-};
+});
 
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -34,10 +35,9 @@ const messagesReducer = (state = initialState, action) => {
                     content: content
                 }
             }));
-            let newMessages = [...state.messages];
+            let newMessages = state.get('messages');
             if (action.payload.event.target.innerHTML !== '') {
                 let content = action.payload.event.target.innerHTML;
-                console.log(content, typeof content);
                 let message = {
                     value: content,
                     my: "yes"
@@ -45,10 +45,7 @@ const messagesReducer = (state = initialState, action) => {
                 newMessages = [...newMessages, message];
                 action.payload.event.target.innerHTML = '';
             }
-            return {
-                ...state,
-                messages: newMessages
-            };
+            return state.set('messages', newMessages);
         case actions.ADD_LOCATION:
             const geoOptions = {
                 enableHighAccuracy: true,
@@ -61,7 +58,7 @@ const messagesReducer = (state = initialState, action) => {
                 longitude: null
             };
 
-            let messagesWithGeo = [...state.messages];
+            let messagesWithGeo = state.get('messages');
 
             getPosition(geoOptions).then(position => {
                 userPosition.latitude = position.coords.latitude.toFixed(5);
@@ -73,10 +70,7 @@ const messagesReducer = (state = initialState, action) => {
                 };
                 messagesWithGeo = [...messagesWithGeo, message];
             });
-            return {
-                ...state,
-                messages: messagesWithGeo
-            };
+            return state.set('messages', messagesWithGeo);
         case actions.ADD_FILE:
             let filelist = action.event.target.files;
             let blobFileList = [];
@@ -84,7 +78,7 @@ const messagesReducer = (state = initialState, action) => {
                 let blobFile = URL.createObjectURL(filelist[i]);
                 blobFileList.push(blobFile);
             }
-            let messagesWithFiles = [...state.messages];
+            let messagesWithFiles = state.get('messages');
             console.log(blobFileList);
             let arrayToConcat = blobFileList.map((el, index) => {
                 if ((filelist[blobFileList.indexOf(el)].type !== 'image/png') && (filelist[blobFileList.indexOf(el)].type !== 'image/jpeg')) {
@@ -103,19 +97,15 @@ const messagesReducer = (state = initialState, action) => {
                     )
                 }
             });
-            console.log(arrayToConcat);
             let message = {
                 value: arrayToConcat,
                 my: "yes"
             };
-            messagesWithFiles.push(message);
+            messagesWithFiles = [...messagesWithFiles, message];
             action.event.target.value = '';
-            return {
-                ...state,
-                messages: messagesWithFiles
-            };
+            return state.set('messages', messagesWithFiles);
         case actions.ADD_BY_CLICK:
-            let newMessagesAfterClick = [...state.messages];
+            let newMessagesAfterClick = state.get('messages');
             action.payload.worker.then((worker) => worker.port.postMessage({
                 apiName: 'send_message',
                 data: {
@@ -123,7 +113,7 @@ const messagesReducer = (state = initialState, action) => {
                     chat_id: '2',
                     content: action.payload.input.value
                 }
-            }))
+            }));
             if (action.payload.input.innerHTML !== '') {
                 let content = action.payload.input.innerHTML;
                 let message = {
@@ -133,10 +123,7 @@ const messagesReducer = (state = initialState, action) => {
                 newMessagesAfterClick = [...newMessagesAfterClick, message];
                 action.payload.input.innerHTML = '';
             }
-            return {
-                ...state,
-                messages: newMessagesAfterClick
-            };
+            return state.set('messages', newMessagesAfterClick);
         case actions.ADD_EMOJI:
             let cnt = state.emojiCounter + 1;
             let input = document.querySelector('span#input');
@@ -145,30 +132,21 @@ const messagesReducer = (state = initialState, action) => {
                 setEndOfContenteditable(input);
             }
             let iconElementId = action.event.target.getAttribute('class');
-            console.log(iconElementId);
             let ele = "<span contenteditable=false";
             //  the only one appropriate usage of template literal in my project
             let el = ele.concat(" title=emoji", ` class=${iconElementId}`, ` id=${cnt}`, "></span>");
             document.execCommand('insertHTML', false, el);
-            return {
-                ...state,
-                emojiCounter: cnt
-            };
+            return state.set('emojiCounter', cnt);
         case actions.MESSAGE_RECEIVED:
-            let messagesWithFromCompanionOne = [...state.messages];
+            let messagesWithFromCompanionOne = state.get('messages');
             message = {
                 value: action.payload.data.text,
                 my: "no"
             };
             messagesWithFromCompanionOne = [...messagesWithFromCompanionOne, message];
-            return {
-                ...state,
-                messages: messagesWithFromCompanionOne
-            };
+            return state.set('messages', messagesWithFromCompanionOne);
         default:
-            return {
-                ...state
-            }
+            return state;
 
     }
 }

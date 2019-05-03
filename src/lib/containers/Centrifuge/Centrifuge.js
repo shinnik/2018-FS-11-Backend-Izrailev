@@ -1,12 +1,12 @@
 import Centrifuge from 'centrifuge';
 import jwt from 'jsonwebtoken';
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import * as actions from "../../../store/reducers/actions";
 
 const SECRET = 'd1914f2c-9d6f-4804-b4ac-cfdca9630fa6';
 
-class CentrifugeClass extends Component {
+class CentrifugeClass extends PureComponent {
 
     componentDidMount() {
         const token = jwt.sign({sub: null}, SECRET, {

@@ -7,7 +7,7 @@ import {fromJS, Map} from 'immutable';
 const initialState = fromJS({
   messages: [{
       value: 'Hello, Nikita!',
-      my: "no"
+      my: 'no'
   }],
   emojiCounter: 0,
 });
@@ -41,7 +41,7 @@ const messagesReducer = (state = initialState, action) => {
                 let content = action.payload.event.target.innerHTML;
                 let message = Map({
                     value: content,
-                    my: "yes"
+                    my: 'yes'
                 });
                 // newMessages = [...newMessages, message];
                 state = state.updateIn(['messages'], list => list.push(message));
@@ -66,7 +66,7 @@ const messagesReducer = (state = initialState, action) => {
                 let geoMessage = 'Latitude: ' + userPosition.latitude + '\nLongitude: ' + userPosition.longitude;
                 let message = Map({
                     value: geoMessage,
-                    my: "no"
+                    my: 'no'
                 });
 
                 state = state.updateIn(['messages'], list => list.push(message));
@@ -92,7 +92,7 @@ const messagesReducer = (state = initialState, action) => {
                 else {
                     return (
                         <div key={el.id}>
-                            <img src={el} alt="nopic"/>
+                            <img src={el} alt='nopic'/>
                             <br />
                         </div>
                     )
@@ -100,7 +100,7 @@ const messagesReducer = (state = initialState, action) => {
             });
             let message = Map({
                 value: arrayToConcat,
-                my: "yes"
+                my: 'yes'
             });
 
             state = state.updateIn(['messages'], list => list.push(message));
@@ -134,15 +134,15 @@ const messagesReducer = (state = initialState, action) => {
                 setEndOfContenteditable(input);
             }
             let iconElementId = action.event.target.getAttribute('class');
-            let ele = "<span contenteditable=false";
+            let ele = '<span contenteditable=false';
             //  the only one appropriate usage of template literal in my project
-            let el = ele.concat(" title=emoji", ` class=${iconElementId}`, ` id=${cnt}`, "></span>");
+            let el = ele.concat(' title=emoji', ` class=${iconElementId}`, ` id=${cnt}`, '></span>');
             document.execCommand('insertHTML', false, el);
             return state.set('emojiCounter', cnt);
         case actions.MESSAGE_RECEIVED:
             message = Map({
                 value: action.payload.data.text,
-                my: "no"
+                my: 'no'
             });
             state = state.updateIn(['messages'], list => list.push(message));
             return state;

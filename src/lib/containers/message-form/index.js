@@ -52,7 +52,7 @@ class MessageForm extends PureComponent {
 
 const mapStateToProps = state => {
     return {
-        messages: state.msg.get('messages')
+        messages: state.msg.getIn(['messages']).toArray().map((el) => el.toObject())
     };
 };
 const mapDispatchToProps = dispatch => {

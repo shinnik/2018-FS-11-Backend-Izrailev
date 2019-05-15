@@ -12,12 +12,12 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import chatReducer from "./store/reducers/chats";
 import * as Sentry from "@sentry/browser";
+import { SENTRY_DSN } from "./appconfig";
 
 
 Sentry.init({
-    dsn: "https://c9f4a3821e94484fac2de845dbca0111@sentry.io/1451722"
+    dsn: `https://${SENTRY_DSN}@sentry.io/1451722`
 });
-
 
 let rootReducer = combineReducers({
     msg: messagesReducer,

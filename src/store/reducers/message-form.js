@@ -2,9 +2,9 @@ import * as actions from './actions';
 import getPosition from '../../../src/lib/components/utils/geolocation';
 import React from "react";
 import { setEndOfContenteditable } from '../../lib/components/utils/CaretControl';
-import { Map } from 'immutable';
+import {fromJS, Map} from 'immutable';
 
-const initialState = Map({
+const initialState = fromJS({
   messages: [{
       value: 'Hello, Nikita!',
       my: "no"
@@ -13,6 +13,7 @@ const initialState = Map({
 });
 
 const messagesReducer = (state = initialState, action) => {
+    console.log(initialState);
     switch (action.type) {
         case actions.PRELOAD_MESSAGES:
             action.loadWorker.then((worker) => worker.port.postMessage({
@@ -35,17 +36,18 @@ const messagesReducer = (state = initialState, action) => {
                     content: content
                 }
             }));
-            let newMessages = state.get('messages');
+            // let newMessages = state.getIn(['messages'], ());
             if (action.payload.event.target.innerHTML !== '') {
                 let content = action.payload.event.target.innerHTML;
-                let message = {
+                let message = Map({
                     value: content,
                     my: "yes"
-                };
-                newMessages = [...newMessages, message];
+                });
+                // newMessages = [...newMessages, message];
+                state = state.updateIn(['messages'], list => list.push(message));
                 action.payload.event.target.innerHTML = '';
             }
-            return state.set('messages', newMessages);
+            return state;
         case actions.ADD_LOCATION:
             const geoOptions = {
                 enableHighAccuracy: true,
@@ -58,19 +60,19 @@ const messagesReducer = (state = initialState, action) => {
                 longitude: null
             };
 
-            let messagesWithGeo = state.get('messages');
-
             getPosition(geoOptions).then(position => {
                 userPosition.latitude = position.coords.latitude.toFixed(5);
                 userPosition.longitude = position.coords.longitude.toFixed(5);
                 let geoMessage = 'Latitude: ' + userPosition.latitude + '\nLongitude: ' + userPosition.longitude;
-                let message = {
+                let message = Map({
                     value: geoMessage,
                     my: "no"
-                };
-                messagesWithGeo = [...messagesWithGeo, message];
+                });
+
+                state = state.updateIn(['messages'], list => list.push(message));
+
             });
-            return state.set('messages', messagesWithGeo);
+            return state;
         case actions.ADD_FILE:
             let filelist = action.event.target.files;
             let blobFileList = [];
@@ -78,7 +80,6 @@ const messagesReducer = (state = initialState, action) => {
                 let blobFile = URL.createObjectURL(filelist[i]);
                 blobFileList.push(blobFile);
             }
-            let messagesWithFiles = state.get('messages');
             console.log(blobFileList);
             let arrayToConcat = blobFileList.map((el, index) => {
                 if ((filelist[blobFileList.indexOf(el)].type !== 'image/png') && (filelist[blobFileList.indexOf(el)].type !== 'image/jpeg')) {
@@ -97,15 +98,15 @@ const messagesReducer = (state = initialState, action) => {
                     )
                 }
             });
-            let message = {
+            let message = Map({
                 value: arrayToConcat,
                 my: "yes"
-            };
-            messagesWithFiles = [...messagesWithFiles, message];
+            });
+
+            state = state.updateIn(['messages'], list => list.push(message));
             action.event.target.value = '';
-            return state.set('messages', messagesWithFiles);
+            return state;
         case actions.ADD_BY_CLICK:
-            let newMessagesAfterClick = state.get('messages');
             action.payload.worker.then((worker) => worker.port.postMessage({
                 apiName: 'send_message',
                 data: {
@@ -116,14 +117,15 @@ const messagesReducer = (state = initialState, action) => {
             }));
             if (action.payload.input.innerHTML !== '') {
                 let content = action.payload.input.innerHTML;
-                let message = {
+                let message = Map({
                     value: content,
                     my: "yes"
-                };
-                newMessagesAfterClick = [...newMessagesAfterClick, message];
+                });
+                // newMessagesAfterClick = [...newMessagesAfterClick, message];
+                state = state.updateIn(['messages'], list => list.push(message));
                 action.payload.input.innerHTML = '';
             }
-            return state.set('messages', newMessagesAfterClick);
+            return state;
         case actions.ADD_EMOJI:
             let cnt = state.emojiCounter + 1;
             let input = document.querySelector('span#input');
@@ -138,13 +140,12 @@ const messagesReducer = (state = initialState, action) => {
             document.execCommand('insertHTML', false, el);
             return state.set('emojiCounter', cnt);
         case actions.MESSAGE_RECEIVED:
-            let messagesWithFromCompanionOne = state.get('messages');
-            message = {
+            message = Map({
                 value: action.payload.data.text,
                 my: "no"
-            };
-            messagesWithFromCompanionOne = [...messagesWithFromCompanionOne, message];
-            return state.set('messages', messagesWithFromCompanionOne);
+            });
+            state = state.updateIn(['messages'], list => list.push(message));
+            return state;
         default:
             return state;
 

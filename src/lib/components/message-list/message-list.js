@@ -4,7 +4,7 @@ import classes from './MessageList.module.css';
 class MessageList extends PureComponent {
 
     myOrNot(message) {
-        if (message.my === "yes")
+        if (message.getIn(['my']) === "yes")
             return classes.yes;
         else {
             return classes.no;
@@ -17,15 +17,16 @@ class MessageList extends PureComponent {
         let time = date.getHours() + ':' + date.getMinutes();
 
         let preparedMessages = this.props.messages.map((el, index) => {
-            if (typeof el.value === "string") {
-                let innHTML = `${el.value} <div class=${classes.time}>${time}</div>`;
+            // console.log(el.getIn(['value']));
+            if (typeof el.getIn(['value']) === "string") {
+                let innHTML = `${el.getIn(['value'])} <div class=${classes.time}>${time}</div>`;
                 let comp = <li dangerouslySetInnerHTML={{__html: innHTML}} className={this.myOrNot(el)}
                                key={index}></li>
                 return comp
             }
             //image gained
-            if (typeof el.value === "object") {
-                let comp = <li className={this.myOrNot(el)} key={index}>{el.value.map((elem, i) => <div key={i}>{elem}</div>)}<div className={classes.time}>{time}</div></li>;
+            if (typeof el.getIn(['value']) === "object") {
+                let comp = <li className={this.myOrNot(el)} key={index}>{el.getIn(['value']).map((elem, i) => <div key={i}>{elem}</div>)}<div className={classes.time}>{time}</div></li>;
                 return comp;
             }
             return null}).reverse();

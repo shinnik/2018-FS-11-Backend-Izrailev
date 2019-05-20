@@ -2,16 +2,18 @@ import * as actions from './actions';
 import getPosition from '../../../src/lib/components/utils/geolocation';
 import React from "react";
 import { setEndOfContenteditable } from '../../lib/components/utils/CaretControl';
+import {fromJS, Map} from 'immutable';
 
-const initialState = {
+const initialState = fromJS({
   messages: [{
       value: 'Hello, Nikita!',
-      my: "no"
+      my: 'no'
   }],
   emojiCounter: 0,
-};
+});
 
 const messagesReducer = (state = initialState, action) => {
+    console.log(initialState);
     switch (action.type) {
         case actions.PRELOAD_MESSAGES:
             action.loadWorker.then((worker) => worker.port.postMessage({
@@ -34,21 +36,18 @@ const messagesReducer = (state = initialState, action) => {
                     content: content
                 }
             }));
-            let newMessages = [...state.messages];
+            // let newMessages = state.getIn(['messages'], ());
             if (action.payload.event.target.innerHTML !== '') {
                 let content = action.payload.event.target.innerHTML;
-                console.log(content, typeof content);
-                let message = {
+                let message = Map({
                     value: content,
-                    my: "yes"
-                };
-                newMessages = [...newMessages, message];
+                    my: 'yes'
+                });
+                // newMessages = [...newMessages, message];
+                state = state.updateIn(['messages'], list => list.push(message));
                 action.payload.event.target.innerHTML = '';
             }
-            return {
-                ...state,
-                messages: newMessages
-            };
+            return state;
         case actions.ADD_LOCATION:
             const geoOptions = {
                 enableHighAccuracy: true,
@@ -61,22 +60,19 @@ const messagesReducer = (state = initialState, action) => {
                 longitude: null
             };
 
-            let messagesWithGeo = [...state.messages];
-
             getPosition(geoOptions).then(position => {
                 userPosition.latitude = position.coords.latitude.toFixed(5);
                 userPosition.longitude = position.coords.longitude.toFixed(5);
                 let geoMessage = 'Latitude: ' + userPosition.latitude + '\nLongitude: ' + userPosition.longitude;
-                let message = {
+                let message = Map({
                     value: geoMessage,
-                    my: "no"
-                };
-                messagesWithGeo = [...messagesWithGeo, message];
+                    my: 'no'
+                });
+
+                state = state.updateIn(['messages'], list => list.push(message));
+
             });
-            return {
-                ...state,
-                messages: messagesWithGeo
-            };
+            return state;
         case actions.ADD_FILE:
             let filelist = action.event.target.files;
             let blobFileList = [];
@@ -84,7 +80,6 @@ const messagesReducer = (state = initialState, action) => {
                 let blobFile = URL.createObjectURL(filelist[i]);
                 blobFileList.push(blobFile);
             }
-            let messagesWithFiles = [...state.messages];
             console.log(blobFileList);
             let arrayToConcat = blobFileList.map((el, index) => {
                 if ((filelist[blobFileList.indexOf(el)].type !== 'image/png') && (filelist[blobFileList.indexOf(el)].type !== 'image/jpeg')) {
@@ -97,25 +92,21 @@ const messagesReducer = (state = initialState, action) => {
                 else {
                     return (
                         <div key={el.id}>
-                            <img src={el} alt="nopic"/>
+                            <img src={el} alt='nopic'/>
                             <br />
                         </div>
                     )
                 }
             });
-            console.log(arrayToConcat);
-            let message = {
+            let message = Map({
                 value: arrayToConcat,
-                my: "yes"
-            };
-            messagesWithFiles.push(message);
+                my: 'yes'
+            });
+
+            state = state.updateIn(['messages'], list => list.push(message));
             action.event.target.value = '';
-            return {
-                ...state,
-                messages: messagesWithFiles
-            };
+            return state;
         case actions.ADD_BY_CLICK:
-            let newMessagesAfterClick = [...state.messages];
             action.payload.worker.then((worker) => worker.port.postMessage({
                 apiName: 'send_message',
                 data: {
@@ -123,20 +114,18 @@ const messagesReducer = (state = initialState, action) => {
                     chat_id: '2',
                     content: action.payload.input.value
                 }
-            }))
+            }));
             if (action.payload.input.innerHTML !== '') {
                 let content = action.payload.input.innerHTML;
-                let message = {
+                let message = Map({
                     value: content,
                     my: "yes"
-                };
-                newMessagesAfterClick = [...newMessagesAfterClick, message];
+                });
+                // newMessagesAfterClick = [...newMessagesAfterClick, message];
+                state = state.updateIn(['messages'], list => list.push(message));
                 action.payload.input.innerHTML = '';
             }
-            return {
-                ...state,
-                messages: newMessagesAfterClick
-            };
+            return state;
         case actions.ADD_EMOJI:
             let cnt = state.emojiCounter + 1;
             let input = document.querySelector('span#input');
@@ -145,30 +134,20 @@ const messagesReducer = (state = initialState, action) => {
                 setEndOfContenteditable(input);
             }
             let iconElementId = action.event.target.getAttribute('class');
-            console.log(iconElementId);
-            let ele = "<span contenteditable=false";
+            let ele = '<span contenteditable=false';
             //  the only one appropriate usage of template literal in my project
-            let el = ele.concat(" title=emoji", ` class=${iconElementId}`, ` id=${cnt}`, "></span>");
+            let el = ele.concat(' title=emoji', ` class=${iconElementId}`, ` id=${cnt}`, '></span>');
             document.execCommand('insertHTML', false, el);
-            return {
-                ...state,
-                emojiCounter: cnt
-            };
+            return state.set('emojiCounter', cnt);
         case actions.MESSAGE_RECEIVED:
-            let messagesWithFromCompanionOne = [...state.messages];
-            message = {
+            message = Map({
                 value: action.payload.data.text,
-                my: "no"
-            };
-            messagesWithFromCompanionOne = [...messagesWithFromCompanionOne, message];
-            return {
-                ...state,
-                messages: messagesWithFromCompanionOne
-            };
+                my: 'no'
+            });
+            state = state.updateIn(['messages'], list => list.push(message));
+            return state;
         default:
-            return {
-                ...state
-            }
+            return state;
 
     }
 }

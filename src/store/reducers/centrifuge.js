@@ -1,11 +1,13 @@
 import * as actionTypes from '../actions/actionTypes';
-import {authStart, authSuccess, authFailed} from '../actions/auth'
+import {authStart, authSuccess, authFailed} from '../actions/auth';
+import { fromJS } from 'immutable';
 
-const initialState = {
+
+const initialState = fromJS({
     token: null,
     error: null,
     loading: false,
-};
+});
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {

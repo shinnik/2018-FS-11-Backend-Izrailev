@@ -29,3 +29,4 @@ node_modules/
 *.swo
 ./idea/
 .idea/
+.env

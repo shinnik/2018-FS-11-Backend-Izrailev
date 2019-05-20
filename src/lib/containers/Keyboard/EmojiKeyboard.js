@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classes from './Keyboard.module.css'
 import { SharedWorkerContext } from '../../../sharedWorkerContext';
 import { EMOJIS } from "./emojis";
 
-class Keyboard extends Component {
+class Keyboard extends PureComponent {
 
     render() {
         const emojiList = EMOJIS.map((emoji, i) => <span title="emoji" key={i} className={emoji.name} onMouseDown={event => event.preventDefault()} onClick={this.props.onEmojiClick}></span>)

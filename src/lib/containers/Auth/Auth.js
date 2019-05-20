@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Input from '../../components/Input/Input';
 import * as actions from '../../../store/actions';
 import * as actionTypes from '../../../store/actions/actionTypes';
@@ -7,7 +7,7 @@ import * as actionTypes from '../../../store/actions/actionTypes';
 import { connect } from 'react-redux';
 
 
-class Auth extends Component {
+class Auth extends PureComponent {
     state={
         controls: {
             email: {
@@ -119,9 +119,9 @@ const mapDispatchToProps = dispatch =>{
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading,
-        error: state.auth.error,
-        token: state.auth.token
+        loading: state.auth.get('loading'),
+        error: state.auth.get('error'),
+        token: state.auth.get('token')
     }
 };
 

@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { PureComponent } from 'react';
 import classes from './Chat.module.css';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/reducers/actions'
 import { SharedWorkerContext } from "../../../sharedWorkerContext";
 import { ChatForm } from '../../components/chat-form/ChatForm'
 
-class Chats extends Component {
+class Chats extends PureComponent {
 
     handleResp = (event) => {
         console.log(event.data)
@@ -40,9 +39,9 @@ class Chats extends Component {
 }
 
 const mapStateToProps = state => ({
-        chatName: state.ch.name,
-        unread: state.ch.numOfMessages,
-        chatID: state.ch.chat_id
+        chatName: state.ch.get('name'),
+        unread: state.ch.get('numOfMessages'),
+        chatID: state.ch.get('chat_id')
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import classes from "./MessageForm.module.css";
 import FormInput from "../../components/form-input/form-input";
@@ -10,7 +10,7 @@ import * as actions from '../../../store/reducers/actions'
 import Keyboard from "../Keyboard/EmojiKeyboard";
 import {SharedWorkerContext} from "../../../sharedWorkerContext";
 
-class MessageForm extends Component {
+class MessageForm extends PureComponent {
 
     handleResp = (event) => {
         console.log(event.data)
@@ -19,7 +19,8 @@ class MessageForm extends Component {
     componentDidMount() {
         if (!this.consoleWorker) {
             this.consoleWorker = this.context(this.handleResp);
-            this.props.onPreloadMessages(this.consoleWorker)
+            this.props.onPreloadMessages(this.consoleWorker);
+            this.forceUpdate();
         }
     };
 
@@ -28,6 +29,7 @@ class MessageForm extends Component {
     }
 
     render() {
+        console.log(this.props.messages, 'MESSAGES');
         return (
             //<style>${styles.toString()}</style>
             <div className={classes.FooterContainer}>
@@ -50,7 +52,7 @@ class MessageForm extends Component {
 
 const mapStateToProps = state => {
     return {
-        messages: state.msg.messages
+        messages: state.msg.getIn(['messages'])
     };
 };
 const mapDispatchToProps = dispatch => {

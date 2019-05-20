@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
 import { connect } from 'react-redux';
 import UserInfo from '../../components/user-info/user-info';
 
 
-class Header extends Component {
+class Header extends PureComponent {
+
     render () {
 
         let dropdownMenu;
@@ -40,8 +41,8 @@ class Header extends Component {
 
 const mapStateToProps = state => {
     return {
-        name: state.hdr.name,
-        isAuth: state.auth.token
+        name: state.hdr.get('name'),
+        isAuth: state.auth.get('token')
     }
 };
 
